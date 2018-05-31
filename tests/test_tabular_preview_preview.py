@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 import pytest
 
+from urllib import quote_plus
+
 from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 
 pytestmark = [
@@ -11,12 +13,32 @@ pytestmark = [
 ]
 
 
-def test_display_preview_for_api_resources():
-    # TODO: Build a dataset and a resource matching required crierions for preview
-    resource = ResourceFactory()
-    DatasetFactory(resources=[resource], extras={})
+@pytest.mark.parametrize('mime', [
+    'text/csv',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+])
+@pytest.mark.options(TABULAR_PREVIEW_SERVER_URL='http://preview.me/')
+def test_display_preview_for_tabular_resources(mime):
+    resource = ResourceFactory(mime=mime)
+    DatasetFactory(resources=[resource])
 
-    assert resource.preview_url == 'http://the.expected/preview/url'
+    encoded_url = quote_plus(resource.url)
+    expected = 'http://preview.me/?csv={0}'.format(encoded_url)
+    assert resource.preview_url == expected
 
 
-# TODO: test other cases, matching or not
+@pytest.mark.options(TABULAR_PREVIEW_SERVER_URL=None)
+def test_no_preview_if_no_conf():
+    resource = ResourceFactory(mime='text/csv')
+    DatasetFactory(resources=[resource])
+
+    assert resource.preview_url is None
+
+
+@pytest.mark.options(TABULAR_PREVIEW_SERVER_URL='http://preview.me/')
+def test_no_preview_if_for_unknown_types():
+    resource = ResourceFactory(mime='not/known')
+    DatasetFactory(resources=[resource])
+
+    assert resource.preview_url is None
