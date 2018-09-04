@@ -99,6 +99,15 @@ def qa(ctx):
 
 
 @task
+def dataexplorer(ctx):
+    static = 'udata_tabular_preview/static/dataexplorer'
+    with ctx.cd(ROOT):
+        ctx.run('mkdir -p {}'.format(static))
+        ctx.run('cp -R node_modules/dataexplorer/build/*.{{js,json}} {}'.format(static))
+        ctx.run('cp -R node_modules/dataexplorer/build/static {}'.format(static))
+
+
+@task
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header('Building a distribuable package')

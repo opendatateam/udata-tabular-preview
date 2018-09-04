@@ -66,6 +66,9 @@ setup(
         'udata.preview': [
             'tabular-preview = udata_tabular_preview.preview:TabularPreview',
         ],
+        'udata.views': [
+            'tabular-preview = udata_tabular_preview.views',
+        ],
     },
     license='AGPL',
     zip_safe=False,
