@@ -99,6 +99,31 @@ def qa(ctx):
 
 
 @task
+def dataexplorer(ctx):
+    '''Build dataexplorer assets'''
+    static = 'udata_tabular_preview/static/dataexplorer'
+    with ctx.cd(ROOT):
+        ctx.run('mkdir -p {}'.format(static))
+        ctx.run('cp -R node_modules/dataexplorer/build/*.{{js,json}} {}'.format(static))
+        ctx.run('cp -R node_modules/dataexplorer/build/static {}'.format(static))
+
+
+@task
+def csvapi_front(ctx):
+    '''Build csvapi-front assets'''
+    static = 'udata_tabular_preview/static/csvapi-front'
+    with ctx.cd(ROOT):
+        ctx.run('mkdir -p {}'.format(static))
+        ctx.run('cp node_modules/csvapi-front/dist/manifest.json {}'.format(static))
+        ctx.run('cp -R node_modules/csvapi-front/dist/{{js,css}} {}'.format(static))
+
+
+@task(dataexplorer, csvapi_front)
+def assets(ctx):
+    '''Build assets'''
+
+
+@task(assets)
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header('Building a distribuable package')

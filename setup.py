@@ -64,7 +64,10 @@ setup(
     },
     entry_points={
         'udata.preview': [
-            'tabular-preview = udata_tabular_preview.preview:TabularPreview',
+            'tabular = udata_tabular_preview.preview:TabularPreview',
+        ],
+        'udata.views': [
+            'tabular = udata_tabular_preview.views',
         ],
     },
     license='AGPL',
