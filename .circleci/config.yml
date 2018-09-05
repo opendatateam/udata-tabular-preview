@@ -61,7 +61,7 @@ jobs:
       - checkout
       - run:
           name: Compute JS dependencies key
-          command: cat .nvmrc package.json > js.deps
+          command: cat package.json > js.deps
       - run:
           name: Get the base reference branch
           command: export BASE_BRANCH=$(base_branch)
