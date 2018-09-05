@@ -12,6 +12,14 @@ blueprint = Blueprint('tabular', __name__, url_prefix='/tabular',
                       static_folder='static')
 
 
+MANIFESTS = {
+    'dataexplorer': os.path.join(blueprint.static_folder,
+                                 'dataexplorer/asset-manifest.json'),
+    'csvapi-front': os.path.join(blueprint.static_folder,
+                                 'csvapi-front/manifest.json'),
+}
+
+
 @blueprint.route('/preview/')
 def preview():
     if current_app.config.get('PREVIEW_MODE') is None:
@@ -20,8 +28,8 @@ def preview():
 
 
 @blueprint.record
-def register_manifest(state):
-    manifest_path = os.path.join(blueprint.static_folder,
-                                 'dataexplorer/asset-manifest.json')
+def init_preview(state):
+    state.app.config.setdefault('TABULAR_UI', 'csvapi-front')
     with state.app.app_context():
-        assets.register_manifest('dataexplorer', filename=manifest_path)
+        for key, manifest in MANIFESTS.items():
+            assets.register_manifest(key, filename=manifest)

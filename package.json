@@ -1,0 +1,23 @@
+{
+  "name": "udata-tabular-preview",
+  "version": "1.0.0",
+  "description": "udata tabular preview plugin",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "csvapi-front": "0.2.0",
+    "dataexplorer": "0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opendatateam/udata-tabular-preview.git"
+  },
+  "author": "Open Data Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/opendatateam/udata-tabular-preview/issues"
+  },
+  "homepage": "https://github.com/opendatateam/udata-tabular-preview#readme"
+}
