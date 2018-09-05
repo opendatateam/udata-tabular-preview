@@ -51,3 +51,20 @@ pip install -e requirements/develop.pip
 ```
 
 (You might need to relaunch this command when you pull upstream changes).
+
+### Testing
+
+Tests are located into the `tests` folder and be run with:
+
+```shell
+inv test
+```
+
+### Quality
+
+Code must pass Flake 8 validation and README should be compatible with `PyPI`.
+You can check both with:
+
+```shell
+inv qa
+```
