@@ -18,7 +18,9 @@ class TabularPreview(PreviewPlugin):
         return current_app.config.get('TABULAR_CSVAPI_URL')
 
     def can_preview(self, resource):
+        print('can preview', bool(self.server_url), resource.mime in SUPPORTED_MIME_TYPES, bool(self.server_url) and resource.mime in SUPPORTED_MIME_TYPES)
         return bool(self.server_url) and resource.mime in SUPPORTED_MIME_TYPES
 
     def preview_url(self, resource):
+        print('preview_url', url_for('tabular.preview', url=resource.url))
         return url_for('tabular.preview', url=resource.url)
