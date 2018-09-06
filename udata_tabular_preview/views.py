@@ -33,3 +33,13 @@ def init_preview(state):
     with state.app.app_context():
         for key, manifest in MANIFESTS.items():
             assets.register_manifest(key, filename=manifest)
+
+
+@blueprint.add_app_template_global
+def tabular_manifest(ui, filename):
+    '''
+    Get an UI asset path from its manifest
+    '''
+    static_root = assets.cdn_for('tabular.static', filename=ui, _external=True)
+    asset = assets.from_manifest(ui, filename, raw=True)
+    return '/'.join((static_root, asset))
