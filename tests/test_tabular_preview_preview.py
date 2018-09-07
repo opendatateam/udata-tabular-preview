@@ -7,6 +7,10 @@ from urllib import quote_plus
 
 from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 
+from udata_tabular_preview.preview import SUPPORTED_MIME_TYPES
+
+MIME_TYPE = SUPPORTED_MIME_TYPES[0]
+
 pytestmark = [
     pytest.mark.usefixtures('clean_db'),
     pytest.mark.options(PLUGINS=['tabular']),
@@ -14,32 +18,45 @@ pytestmark = [
 ]
 
 
-@pytest.mark.parametrize('mime', [
-    'text/csv',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-])
+def expected_url(url):
+    encoded_url = quote_plus(url)
+    return '/tabular/preview/?url={0}'.format(encoded_url)
+
+
+@pytest.mark.parametrize('mime', SUPPORTED_MIME_TYPES)
 @pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/')
 def test_display_preview_for_tabular_resources(mime):
     resource = ResourceFactory(mime=mime)
-    DatasetFactory(resources=[resource])
 
-    encoded_url = quote_plus(resource.url)
-    expected = '/tabular/preview/?url={0}'.format(encoded_url)
-    assert resource.preview_url == expected
+    assert resource.preview_url == expected_url(resource.url)
 
 
 @pytest.mark.options(TABULAR_CSVAPI_URL=None)
 def test_no_preview_if_no_conf():
-    resource = ResourceFactory(mime='text/csv')
-    DatasetFactory(resources=[resource])
-
-    assert resource.preview_url is None
+    assert ResourceFactory(mime=MIME_TYPE).preview_url is None
 
 
 @pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/')
 def test_no_preview_if_for_unknown_types():
-    resource = ResourceFactory(mime='not/known')
-    DatasetFactory(resources=[resource])
+    assert ResourceFactory(mime='not/known').preview_url is None
 
-    assert resource.preview_url is None
+
+@pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/')
+def test_default_allow_remote_preview():
+    resources = [
+        ResourceFactory(mime=MIME_TYPE),
+        ResourceFactory(filetype='remote', mime=MIME_TYPE),
+    ]
+
+    for resource in resources:
+        assert resource.preview_url == expected_url(resource.url)
+
+
+@pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/',
+                     TABULAR_ALLOW_REMOTE=False)
+def test_allow_remote_preview_false():
+    local = ResourceFactory(mime=MIME_TYPE)
+    remote = ResourceFactory(filetype='remote', mime=MIME_TYPE)
+
+    assert local.preview_url == expected_url(local.url)
+    assert remote.preview_url is None
