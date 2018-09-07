@@ -13,6 +13,8 @@ SUPPORTED_MIME_TYPES = (
 
 
 class TabularPreview(PreviewPlugin):
+    fallback = True
+
     @property
     def server_url(self):
         return current_app.config.get('TABULAR_CSVAPI_URL')
