@@ -101,21 +101,25 @@ def qa(ctx):
 @task
 def dataexplorer(ctx):
     '''Build dataexplorer assets'''
+    header('Copying dataexplorer assets')
+    src = "node_modules/@opendatateam/dataexplorer/build"
     static = 'udata_tabular_preview/static/dataexplorer'
     with ctx.cd(ROOT):
         ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp -R node_modules/dataexplorer/build/*.{{js,json}} {}'.format(static))
-        ctx.run('cp -R node_modules/dataexplorer/build/static {}'.format(static))
+        ctx.run('cp -R {src}/*.{{js,json}} {static}'.format(**locals()))
+        ctx.run('cp -R {src}/static {static}'.format(**locals()))
 
 
 @task
 def csvapi_front(ctx):
     '''Build csvapi-front assets'''
+    header('Copying csvapi-front assets')
+    src = "node_modules/@opendatateam/csvapi-front/dist"
     static = 'udata_tabular_preview/static/csvapi-front'
     with ctx.cd(ROOT):
         ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp node_modules/csvapi-front/dist/manifest.json {}'.format(static))
-        ctx.run('cp -R node_modules/csvapi-front/dist/{{js,css}} {}'.format(static))
+        ctx.run('cp {src}/manifest.json {static}'.format(**locals()))
+        ctx.run('cp -R {src}/{{js,css}} {static}'.format(**locals()))
 
 
 @task(dataexplorer, csvapi_front)
