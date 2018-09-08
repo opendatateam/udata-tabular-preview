@@ -13,12 +13,20 @@ SUPPORTED_MIME_TYPES = (
 
 
 class TabularPreview(PreviewPlugin):
+    fallback = True
+
     @property
     def server_url(self):
         return current_app.config.get('TABULAR_CSVAPI_URL')
 
     def can_preview(self, resource):
-        return bool(self.server_url) and resource.mime in SUPPORTED_MIME_TYPES
+        has_config = bool(self.server_url)
+        is_supported = resource.mime in SUPPORTED_MIME_TYPES
+        is_remote = resource.filetype == 'remote'
+        allow_remote = current_app.config.get('TABULAR_ALLOW_REMOTE')
+        is_allowed = allow_remote or not is_remote
+
+        return has_config and is_supported and is_allowed
 
     def preview_url(self, resource):
         return url_for('tabular.preview', url=resource.url)

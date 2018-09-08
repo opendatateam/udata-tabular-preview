@@ -7,6 +7,8 @@ from flask import abort, current_app, render_template, Blueprint
 
 from udata import assets
 
+from . import settings as DEFAULTS
+
 blueprint = Blueprint('tabular', __name__, url_prefix='/tabular',
                       template_folder='templates',
                       static_folder='static')
@@ -29,7 +31,8 @@ def preview():
 
 @blueprint.record
 def init_preview(state):
-    state.app.config.setdefault('TABULAR_UI', 'csvapi-front')
+    for key, default in DEFAULTS.__dict__.items():
+        state.app.config.setdefault(key, default)
     with state.app.app_context():
         for key, manifest in MANIFESTS.items():
             assets.register_manifest(key, filename=manifest)
