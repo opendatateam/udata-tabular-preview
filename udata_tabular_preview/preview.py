@@ -25,8 +25,10 @@ class TabularPreview(PreviewPlugin):
         is_remote = resource.filetype == 'remote'
         allow_remote = current_app.config.get('TABULAR_ALLOW_REMOTE')
         is_allowed = allow_remote or not is_remote
+        max_size = current_app.config.get('TABULAR_MAX_SIZE')
+        size_ok = not max_size or resource.filesize <= max_size
 
-        return has_config and is_supported and is_allowed
+        return all((has_config, is_supported, is_allowed, size_ok))
 
     def preview_url(self, resource):
         return url_for('tabular.preview', url=resource.url)

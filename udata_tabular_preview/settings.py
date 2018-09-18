@@ -11,3 +11,6 @@ TABULAR_UI = 'csvapi-front'
 
 # Whether or not to allow remote resources
 TABULAR_ALLOW_REMOTE = True
+
+# Max (included) allowed file size in bytes
+TABULAR_MAX_SIZE = None

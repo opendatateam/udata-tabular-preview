@@ -10,6 +10,7 @@ from udata.core.dataset.factories import DatasetFactory, ResourceFactory
 from udata_tabular_preview.preview import SUPPORTED_MIME_TYPES
 
 MIME_TYPE = SUPPORTED_MIME_TYPES[0]
+MAX_SIZE = 50000
 
 pytestmark = [
     pytest.mark.usefixtures('clean_db'),
@@ -60,3 +61,27 @@ def test_allow_remote_preview_false():
 
     assert local.preview_url == expected_url(local.url)
     assert remote.preview_url is None
+
+
+@pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/')
+def test_display_preview_without_max_size():
+    resource = ResourceFactory(mime=MIME_TYPE, filesize=2 * MAX_SIZE)
+
+    assert resource.preview_url == expected_url(resource.url)
+
+
+@pytest.mark.parametrize('size', [MAX_SIZE - 1, MAX_SIZE])
+@pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/',
+                     TABULAR_MAX_SIZE=MAX_SIZE)
+def test_display_preview_with_max_size(size):
+    resource = ResourceFactory(mime=MIME_TYPE, filesize=size)
+
+    assert resource.preview_url == expected_url(resource.url)
+
+
+@pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/',
+                     TABULAR_MAX_SIZE=MAX_SIZE)
+def test_no_preview_for_resource_over_max_size():
+    resource = ResourceFactory(mime=MIME_TYPE, filesize=MAX_SIZE + 1)
+
+    assert resource.preview_url is None
