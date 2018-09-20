@@ -24,6 +24,7 @@ You can control this plugin behavior with the following `udata.cfg` parameters:
 - **`TABULAR_UI`**:  Choose the UI displaying previews. You can choose between `csvapi-front` and `dataexplorer'. Default value is `csvapi-front`
 - **`TABULAR_ALLOW_REMOTE`**: Whether or not to allow remote resources preview. Default value is `True`
 - **`TABULAR_MAX_SIZE`**: Max allowed file size in bytes if defined. Default value is `None`
+- **`TABULAR_PAGE_SIZE`**: fetched data page size. Default to `50`
 
 
 ## Development
