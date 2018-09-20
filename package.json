@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "dependencies": {
-    "@opendatateam/csvapi-front": "0.3.0",
+    "@opendatateam/csvapi-front": "0.3.1",
     "@opendatateam/dataexplorer": "0.1.0"
   },
   "repository": {
