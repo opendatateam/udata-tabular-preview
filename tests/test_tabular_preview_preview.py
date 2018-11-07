@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 
 import pytest
 
-from urllib import quote_plus
+from urllib.parse import quote_plus
 
-from udata.core.dataset.factories import DatasetFactory, ResourceFactory
+from udata.core.dataset.factories import ResourceFactory
 
 from udata_tabular_preview.preview import SUPPORTED_MIME_TYPES
 
