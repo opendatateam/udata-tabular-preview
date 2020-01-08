@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from flask import current_app, url_for
 from udata.core.dataset.preview import PreviewPlugin
 
