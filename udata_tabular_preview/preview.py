@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from flask import current_app, url_for
 from udata.core.dataset.preview import PreviewPlugin
 
@@ -26,7 +23,7 @@ class TabularPreview(PreviewPlugin):
         allow_remote = current_app.config.get('TABULAR_ALLOW_REMOTE')
         is_allowed = allow_remote or not is_remote
         max_size = current_app.config.get('TABULAR_MAX_SIZE')
-        size_ok = not max_size or resource.filesize <= max_size
+        size_ok = not max_size or (resource.filesize or float('inf')) <= max_size
 
         return all((has_config, is_supported, is_allowed, size_ok))
 
