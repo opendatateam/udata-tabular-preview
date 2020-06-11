@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use extras attributes to enable preview [#8](https://github.com/opendatateam/udata-tabular-preview/pull/8)
 
 ## 2.0.0 (2020-03-11)
 

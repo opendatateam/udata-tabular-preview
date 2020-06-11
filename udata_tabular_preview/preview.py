@@ -18,12 +18,23 @@ class TabularPreview(PreviewPlugin):
 
     def can_preview(self, resource):
         has_config = bool(self.server_url)
-        is_supported = resource.mime in SUPPORTED_MIME_TYPES
+
+        extras_mime = resource.extras.get('check:headers:content-type')
+        is_supported = (
+            extras_mime in SUPPORTED_MIME_TYPES
+            or resource.mime in SUPPORTED_MIME_TYPES
+        )
+
         is_remote = resource.filetype == 'remote'
         allow_remote = current_app.config.get('TABULAR_ALLOW_REMOTE')
         is_allowed = allow_remote or not is_remote
+
         max_size = current_app.config.get('TABULAR_MAX_SIZE')
-        size_ok = not max_size or (resource.filesize or float('inf')) <= max_size
+        extras_size = resource.extras.get('check:headers:content-length')
+        size_ok = (
+            not max_size
+            or (extras_size or resource.filesize or float("inf")) <= max_size
+        )
 
         return all((has_config, is_supported, is_allowed, size_ok))
 
