@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 2.0.1 (2020-06-17)
 
 - Use extras attributes to enable preview [#8](https://github.com/opendatateam/udata-tabular-preview/pull/8)
