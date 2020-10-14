@@ -6,6 +6,7 @@ from udata.core.dataset.factories import ResourceFactory
 
 
 MIME_TYPE = 'text/csv'
+DUMMY_MIMES = ['text/csv', 'text/toto']
 MAX_SIZE = 50000
 
 pytestmark = [
@@ -20,8 +21,9 @@ def expected_url(url):
     return '/tabular/preview/?url={0}'.format(encoded_url)
 
 
-@pytest.mark.parametrize('mime', ['text/csv', 'text/toto'])
+@pytest.mark.parametrize('mime', DUMMY_MIMES)
 @pytest.mark.options(TABULAR_CSVAPI_URL='http://preview.me/')
+@pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=DUMMY_MIMES)
 def test_display_preview_for_tabular_resources(mime):
     resource = ResourceFactory(mime=mime)
     assert resource.preview_url == expected_url(resource.url)
