@@ -12,7 +12,7 @@ class TabularPreview(PreviewPlugin):
     def can_preview(self, resource):
         has_config = bool(self.server_url)
 
-        supported_mimes = current_app.config.get('SUPPORTED_MIME_TYPES')
+        supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
         extras_mime = resource.extras.get('check:headers:content-type')
         is_supported = (
             extras_mime in supported_mimes
