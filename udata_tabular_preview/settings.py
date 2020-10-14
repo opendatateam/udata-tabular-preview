@@ -15,3 +15,10 @@ TABULAR_MAX_SIZE = None
 
 # Default page size
 TABULAR_PAGE_SIZE = 50
+
+# Supported mimes
+SUPPORTED_MIME_TYPES = (
+    'text/csv',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+)
