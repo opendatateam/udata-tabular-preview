@@ -2,13 +2,6 @@ from flask import current_app, url_for
 from udata.core.dataset.preview import PreviewPlugin
 
 
-SUPPORTED_MIME_TYPES = (
-    'text/csv',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-)
-
-
 class TabularPreview(PreviewPlugin):
     fallback = True
 
@@ -19,10 +12,11 @@ class TabularPreview(PreviewPlugin):
     def can_preview(self, resource):
         has_config = bool(self.server_url)
 
+        supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
         extras_mime = resource.extras.get('check:headers:content-type')
         is_supported = (
-            extras_mime in SUPPORTED_MIME_TYPES
-            or resource.mime in SUPPORTED_MIME_TYPES
+            extras_mime in supported_mimes
+            or resource.mime in supported_mimes
         )
 
         is_remote = resource.filetype == 'remote'

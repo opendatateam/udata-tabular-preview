@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add a setting for SUPPORTED_MIME_TYPES [#9](https://github.com/opendatateam/udata-tabular-preview/pull/9)
 
 ## 2.0.1 (2020-06-17)
 
