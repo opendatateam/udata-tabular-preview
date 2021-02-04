@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="csvapi-url" content="{{ config.TABULAR_CSVAPI_URL }}" />
     <meta name="page-size" content="{{ config.TABULAR_PAGE_SIZE }}" />
-    <meta name="filters-enabled" content="{{ config.TABULAR_FILTERS_ENABLED }}" />
+    <meta name="filters-enabled" content="{{ 'true' if config.TABULAR_FILTERS_ENABLED else 'false' }}" />
     {% if config.TABULAR_UI == 'dataexplorer' %}
     <link href="{{ tabular_manifest('dataexplorer', 'main.css') }}" rel="stylesheet" >
     <link href="{{ tabular_manifest('dataexplorer', 'main.css') }}" rel="stylesheet"-->
