@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Upgrade csvapi-front to 0.5.0 [#10](https://github.com/opendatateam/udata-tabular-preview/pull/10)
 
 ## 2.0.2 (2020-10-16)
 

@@ -6,23 +6,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="csvapi-url" content="{{ config.TABULAR_CSVAPI_URL }}" />
     <meta name="page-size" content="{{ config.TABULAR_PAGE_SIZE }}" />
-    {% if config.TABULAR_UI == 'dataexplorer' %}
-    <link href="{{ tabular_manifest('dataexplorer', 'main.css') }}" rel="stylesheet" >
-    <link href="{{ tabular_manifest('dataexplorer', 'main.css') }}" rel="stylesheet"-->
-    {% else %}
+    <meta name="filters-enabled" content="{{ 'true' if config.TABULAR_FILTERS_ENABLED else 'false' }}" />
     <link href="{{ tabular_manifest('csvapi-front', 'chunk-vendors.css') }}" rel="stylesheet"-- >
     <link href="{{ tabular_manifest('csvapi-front', 'app.css') }}" rel="stylesheet"-->
-    {% endif %}
 </head>
 
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="app"></div>
-    {% if config.TABULAR_UI == 'dataexplorer' %}
-    <script type="text/javascript" src="{{ tabular_manifest('dataexplorer', 'main.js') }}"></script>
-    {% else %}
     <script type="text/javascript" src="{{ tabular_manifest('csvapi-front', 'chunk-vendors.js') }}"></script>
     <script type="text/javascript" src="{{ tabular_manifest('csvapi-front', 'app.js') }}"></script>
-    {% endif %}
 </body>
 
 </html>

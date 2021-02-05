@@ -22,3 +22,6 @@ TABULAR_SUPPORTED_MIME_TYPES = (
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 )
+
+# Enable data filtering by column
+TABULAR_FILTERS_ENABLED = True
