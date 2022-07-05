@@ -22,3 +22,12 @@ def preview():
 def init_preview(state):
     for key, default in DEFAULTS.__dict__.items():
         state.app.config.setdefault(key, default)
+
+
+@blueprint.add_app_template_global
+def tabular_static(filename):
+    '''
+    Get an UI asset path
+    '''
+    static_root = assets.cdn_for('tabular.static', _external=True)
+    return '/'.join((static_root, filename))
