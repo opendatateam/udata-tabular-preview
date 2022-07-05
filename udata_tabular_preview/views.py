@@ -25,9 +25,9 @@ def init_preview(state):
 
 
 @blueprint.add_app_template_global
-def tabular_static(filename):
+def tabular_static(ui, filename):
     '''
     Get an UI asset path
     '''
-    static_root = assets.cdn_for('tabular.static', _external=True)
+    static_root = assets.cdn_for('tabular.static', filename=ui, _external=True)
     return '/'.join((static_root, filename))
