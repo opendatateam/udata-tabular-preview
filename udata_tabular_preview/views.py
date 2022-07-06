@@ -30,4 +30,4 @@ def tabular_static(ui, filename):
     Get an UI asset path
     '''
     static_root = assets.cdn_for('tabular.static', filename=ui, _external=True)
-    return '/'.join((static_root, filename))
+    return f"{static_root}/{filename.split('.')[1]}/{filename}"
