@@ -1,5 +1,3 @@
-import os
-
 from flask import abort, current_app, render_template, Blueprint
 
 from udata import assets
