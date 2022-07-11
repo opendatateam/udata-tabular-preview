@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 2.0.3 (2022-07-11)
 
 - Remove legacy manifest logic and dataexplorer integration [#12](https://github.com/opendatateam/udata-tabular-preview/pull/12)
 
