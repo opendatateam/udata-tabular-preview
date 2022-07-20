@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Replace mongo legacy image in CI [#13](https://github.com/opendatateam/udata-tabular-preview/pull/13)
 
 ## 2.0.3 (2022-07-11)
 
