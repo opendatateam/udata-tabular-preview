@@ -2,12 +2,27 @@
   "name": "udata-tabular-preview",
   "version": "1.0.0",
   "description": "udata tabular preview plugin",
-  "main": "index.js",
+  "source": "udata-tabular-preview/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "directories": {
     "test": "tests"
   },
+  "scripts": {
+    "clean": "rimraf .parcel-cache",
+    "build": "npm run clean && parcel build",
+    "prebuild": "npm run clean",
+    "preversion": "npm run build",
+    "postversion": "git push --follow-tags"
+  },
   "dependencies": {
-    "@etalab/csvapi-front": "0.6.3"
+    "vue": "^3.2.41"
+  },
+  "devDependencies": {
+    "@parcel/transformer-vue": "^2.7.0",
+    "parcel": "^2.6.0",
+    "rimraf": "^3.0.2",
+    "udata-front": "file:../udata-front/udata-front"
   },
   "repository": {
     "type": "git",
@@ -18,5 +33,9 @@
   "bugs": {
     "url": "https://github.com/opendatateam/udata-tabular-preview/issues"
   },
+  "alias": {
+    "udata-front": "../udata-front/udata-front"
+  },
+  "browserslist": "> 0.1% in FR, last 15 versions, Firefox ESR, not dead",
   "homepage": "https://github.com/opendatateam/udata-tabular-preview#readme"
 }
