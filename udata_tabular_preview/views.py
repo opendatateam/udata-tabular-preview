@@ -14,7 +14,7 @@ blueprint = Blueprint('tabular', __name__, url_prefix='/tabular',
 
 
 def can_explore_dataset(ctx):
-    dataset = ctx['dataset']
+    dataset = ctx.get('dataset', None)
     return dataset and any(can_explore(resource) for resource in dataset.resources)
 
 
