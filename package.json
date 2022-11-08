@@ -1,28 +1,32 @@
 {
   "name": "udata-tabular-preview",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "udata tabular preview plugin",
-  "source": "udata-tabular-preview/index.js",
-  "main": "dist/js/index.js",
-  "type": "module",
   "directories": {
     "test": "tests"
   },
+  "source": "udata-tabular-preview/index.js",
+  "target": {
+    "browser": {
+      "includeNodeModules": {
+        "vue": false
+      }
+    }
+  },
+  "sideEffects": false,
   "scripts": {
     "clean": "rimraf .parcel-cache",
-    "build": "npm run clean && parcel build",
+    "build": "npm run clean && parcel build --dist-dir udata_tabular_preview/static/udata-tabular-preview/js/",
     "prebuild": "npm run clean",
     "preversion": "npm run build",
     "postversion": "git push --follow-tags"
-  },
-  "dependencies": {
-    "vue": "^3.2.41"
   },
   "devDependencies": {
     "@parcel/transformer-vue": "^2.7.0",
     "parcel": "^2.6.0",
     "rimraf": "^3.0.2",
-    "udata-front": "file:../udata-front/udata-front"
+    "udata-front": "file:../udata-front/udata-front",
+    "vue": "file:../udata-front/node_modules/vue"
   },
   "repository": {
     "type": "git",
@@ -34,7 +38,8 @@
     "url": "https://github.com/opendatateam/udata-tabular-preview/issues"
   },
   "alias": {
-    "udata-front": "../udata-front/udata-front"
+    "udata-front": "../udata-front/udata-front",
+    "vue": "../udata-front/node_modules/vue/dist/vue.esm-bundler.js"
   },
   "browserslist": "> 0.1% in FR, last 15 versions, Firefox ESR, not dead",
   "homepage": "https://github.com/opendatateam/udata-tabular-preview#readme"

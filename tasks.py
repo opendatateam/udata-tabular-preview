@@ -109,12 +109,8 @@ def csvapi_front(ctx):
 def assets(ctx):
     '''Build assets'''
     header('Building udata-tabular-preview assets')
-    src = "dist"
-    static = 'udata_tabular_preview/static/udata-tabular-preview'
     with ctx.cd(ROOT):
         ctx.run('npm run build', pty=True)
-        ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp -R {src}/js {static}'.format(**locals()))
 
 
 @task(assets)

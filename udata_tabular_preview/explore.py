@@ -2,6 +2,7 @@ from flask import current_app
 
 
 def can_explore(resource):
+    return True
     has_config = bool(current_app.config.get('TABULAR_CSVAPI_FRONT_URL'))
 
     supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
