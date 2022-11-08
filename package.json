@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "udata tabular preview plugin",
   "source": "udata-tabular-preview/index.js",
-  "main": "dist/index.js",
+  "main": "dist/js/index.js",
   "type": "module",
   "directories": {
     "test": "tests"

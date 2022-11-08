@@ -1,6 +1,10 @@
-from flask import abort, current_app, render_template, Blueprint
+from flask import Blueprint
 
 from udata import assets
+from udata.frontend import template_hook
+from udata_front import theme
+
+from udata_tabular_preview.explore import can_explore
 
 from . import settings as DEFAULTS
 
@@ -9,11 +13,14 @@ blueprint = Blueprint('tabular', __name__, url_prefix='/tabular',
                       static_folder='static')
 
 
-@blueprint.route('/preview/')
-def preview():
-    if current_app.config.get('PREVIEW_MODE') is None:
-        abort(404)
-    return render_template('tabular/preview.html')
+def can_explore_dataset(ctx):
+    dataset = ctx['dataset']
+    return dataset and any(can_explore(resource) for resource in dataset.resources)
+
+
+@template_hook('footer.snippets', when=can_explore_dataset)
+def load_explore_script(ctx):
+    return theme.render('script.html')
 
 
 @blueprint.record

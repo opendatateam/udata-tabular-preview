@@ -1,5 +1,6 @@
-from flask import current_app, url_for
+from flask import current_app
 from udata.core.dataset.preview import PreviewPlugin
+from urllib.parse import quote_plus
 
 
 class TabularPreview(PreviewPlugin):
@@ -32,5 +33,12 @@ class TabularPreview(PreviewPlugin):
 
         return all((has_config, is_supported, is_allowed, size_ok))
 
+    @property
+    def preview_base_url(self):
+        return current_app.config.get('TABULAR_CSVAPI_FRONT_URL')
+
     def preview_url(self, resource):
-        return url_for('tabular.preview', url=resource.url)
+        return '{preview_base_url}/?url={resource_url}'.format(
+            preview_base_url=self.preview_base_url,
+            resource_url=quote_plus(resource.latest)
+        )

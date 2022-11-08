@@ -4,6 +4,9 @@ Default settings for udata-tabular-preview
 # csvapi instance URL
 TABULAR_CSVAPI_URL = None
 
+# csvapi-front instance URL
+TABULAR_CSVAPI_FRONT_URL = None
+
 # Preview UI, one of 'csvapi-front', 'data
 TABULAR_UI = 'csvapi-front'
 
