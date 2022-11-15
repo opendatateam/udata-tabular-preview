@@ -1,15 +1,16 @@
-import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { babel } from '@rollup/plugin-babel';
+import legacy from '@vitejs/plugin-legacy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         vue(),
+        legacy({
+            targets: "> 0.1%, last 15 versions, Firefox ESR, not dead",
+        }),
     ],
     build: {
-        target: "es2015",
         rollupOptions: {
             input: "udata-tabular-preview/index.js",
             // make sure to externalize deps that shouldn't be bundled
