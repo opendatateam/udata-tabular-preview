@@ -25,7 +25,9 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import  { apify, configure, getData } from "@etalab/csvapi-front/src/csvapi";
+import { defineComponent, ref } from 'vue';
+import { tabular_csvapi_url } from "./config";
 
 export default defineComponent({
     props: {
@@ -35,178 +37,47 @@ export default defineComponent({
         }
     },
     setup(props) {
-        // const apiUrl = new URL(csvapi.defaults.baseURL ?? '');
-        // apiUrl.pathname = '/apify';
-        // apiUrl.searchParams.set('url', encodeURI(props.resource.latest));
-        // apiUrl.searchParams.set('analysis', 'yes');
-        const columns = [
-            "dep",
-            "date",
-            "reg",
-            "lib_dep",
-            "lib_reg",
-            "tx_pos",
-            "tx_incid",
-            "TO",
-            "R",
-            "hosp",
-            "rea",
-            "rad",
-            "dchosp",
-            "reg_rea",
-            "incid_hosp",
-            "incid_rea",
-            "incid_rad",
-            "incid_dchosp",
-            "reg_incid_rea",
-            "pos",
-            "pos_7j",
-            "cv_dose1"
-        ];
-        const generalInformations = {
-            "dataset_id": null,
-            "date_last_check": "2022-10-25",
-            "encoding": "UTF-8",
-            "filetype": "csv",
-            "header_row_idx": 0,
-            "nb_cells_missing": 202004,
-            "nb_columns": 22,
-            "nb_vars_all_missing": 0,
-            "nb_vars_with_missing": 11,
-            "resource_id": null,
-            "separator": ",",
-            "total_lines": 96152
-        };
-        const rows = [
-            {
-                "R": null,
-                "TO": 0.0626118067978533,
-                "cv_dose1": null,
-                "date": "2020-03-18",
-                "dchosp": 0.0,
-                "dep": "01",
-                "hosp": 2.0,
-                "incid_dchosp": null,
-                "incid_hosp": null,
-                "incid_rad": null,
-                "incid_rea": null,
-                "lib_dep": "Ain",
-                "lib_reg": "Auvergne et Rh\u00f4ne-Alpes",
-                "pos": null,
-                "pos_7j": null,
-                "rad": 1.0,
-                "rea": 0.0,
-                "reg": 84.0,
-                "reg_incid_rea": null,
-                "reg_rea": 35.0,
-                "tx_incid": null,
-                "tx_pos": null
-            },
-            {
-                "R": null,
-                "TO": 0.132379248658318,
-                "cv_dose1": null,
-                "date": "2020-03-19",
-                "dchosp": 0.0,
-                "dep": "01",
-                "hosp": 2.0,
-                "incid_dchosp": 0.0,
-                "incid_hosp": 1.0,
-                "incid_rad": 0.0,
-                "incid_rea": 0.0,
-                "lib_dep": "Ain",
-                "lib_reg": "Auvergne et Rh\u00f4ne-Alpes",
-                "pos": null,
-                "pos_7j": null,
-                "rad": 1.0,
-                "rea": 0.0,
-                "reg": 84.0,
-                "reg_incid_rea": 44.0,
-                "reg_rea": 79.0,
-                "tx_incid": null,
-                "tx_pos": null
-            },
-            {
-                "R": null,
-                "TO": 0.155635062611807,
-                "cv_dose1": null,
-                "date": "2020-03-20",
-                "dchosp": 0.0,
-                "dep": "01",
-                "hosp": 2.0,
-                "incid_dchosp": 0.0,
-                "incid_hosp": 0.0,
-                "incid_rad": 1.0,
-                "incid_rea": 0.0,
-                "lib_dep": "Ain",
-                "lib_reg": "Auvergne et Rh\u00f4ne-Alpes",
-                "pos": null,
-                "pos_7j": null,
-                "rad": 1.0,
-                "rea": 0.0,
-                "reg": 84.0,
-                "reg_incid_rea": 16.0,
-                "reg_rea": 87.0,
-                "tx_incid": null,
-                "tx_pos": null
-            },
-            {
-                "R": null,
-                "TO": 0.173524150268336,
-                "cv_dose1": null,
-                "date": "2020-03-21",
-                "dchosp": 0.0,
-                "dep": "01",
-                "hosp": 4.0,
-                "incid_dchosp": 0.0,
-                "incid_hosp": 3.0,
-                "incid_rad": 0.0,
-                "incid_rea": 0.0,
-                "lib_dep": "Ain",
-                "lib_reg": "Auvergne et Rh\u00f4ne-Alpes",
-                "pos": null,
-                "pos_7j": null,
-                "rad": 1.0,
-                "rea": 0.0,
-                "reg": 84.0,
-                "reg_incid_rea": 15.0,
-                "reg_rea": 88.0,
-                "tx_incid": null,
-                "tx_pos": null
-            },
-            {
-                "R": null,
-                "TO": 0.212880143112701,
-                "cv_dose1": null,
-                "date": "2020-03-22",
-                "dchosp": 0.0,
-                "dep": "01",
-                "hosp": 8.0,
-                "incid_dchosp": 0.0,
-                "incid_hosp": 3.0,
-                "incid_rad": 1.0,
-                "incid_rea": 1.0,
-                "lib_dep": "Ain",
-                "lib_reg": "Auvergne et Rh\u00f4ne-Alpes",
-                "pos": null,
-                "pos_7j": null,
-                "rad": 2.0,
-                "rea": 1.0,
-                "reg": 84.0,
-                "reg_incid_rea": 25.0,
-                "reg_rea": 106.0,
-                "tx_incid": null,
-                "tx_pos": null
-            },
-        ];
-        const rowCount = 96152;
-        const columnCount = columns.length;
+        /** @type {import("vue").Ref<Array>} */
+        const columns = ref([]);
+        /** @type {import("vue").Ref<object | null>} */
+        const generalInformations = ref(null);
+        /** @type {import("vue").Ref<Array>} */
+        const rows = ref([]);
+        /** @type {import("vue").Ref<number | null>} */
+        const rowCount = ref(null);
+        /** @type {import("vue").Ref<number | null>} */
+        const columnCount = ref(null);
+        const loading = ref(true);
+        configure({csvapiUrl: tabular_csvapi_url});
+        // TODO : remove when we're done or find a way to 
+        const url = props.resource.latest.replace("http://dev.local:7000", "https://www.data.gouv.fr");
+        apify(url).then(res => {
+            if (res.ok) {
+                configure({dataEndpoint: res.endpoint});
+                return getData("apify").then(res => {
+                    if (res.ok) {
+                        rows.value = res.rows;
+                        columns.value = res.columns;
+                        generalInformations.value = res.general_infos;
+                        rowCount.value = res.total;
+                        columnCount.value = res.columns.length;
+                    } else {
+                        console.log(res);
+                    }
+                    loading.value = false;
+                }).catch(res => console.log(res));
+            } else {
+                console.log(res);
+                loading.value = false;
+            }
+        }).catch(res => console.log(res));
         return {
             generalInformations,
             columns,
             rows,
             rowCount,
             columnCount,
+            loading,
         }
     }
 });
