@@ -7,9 +7,6 @@ TABULAR_CSVAPI_URL = None
 # csvapi-front instance URL
 TABULAR_CSVAPI_FRONT_URL = None
 
-# Preview UI, one of 'csvapi-front', 'data
-TABULAR_UI = 'csvapi-front'
-
 # Whether or not to allow remote resources
 TABULAR_ALLOW_REMOTE = True
 
