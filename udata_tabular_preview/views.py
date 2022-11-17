@@ -18,10 +18,13 @@ def can_explore_dataset(ctx):
     return dataset and any(can_explore(resource) for resource in dataset.resources)
 
 
+@template_hook('header.snippets', when=can_explore_dataset)
+def load_explore_script(ctx):
+    return theme.render('metadata.html')
+
 @template_hook('footer.snippets', when=can_explore_dataset)
 def load_explore_script(ctx):
     return theme.render('script.html')
-
 
 @blueprint.record
 def init_preview(state):
