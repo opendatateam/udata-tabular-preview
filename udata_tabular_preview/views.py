@@ -20,7 +20,12 @@ def can_explore_dataset(ctx):
 
 @template_hook('header.snippets', when=can_explore_dataset)
 def load_explore_script(ctx):
-    return theme.render('metadata.html')
+    dataset = ctx.get('dataset', None)
+    resources = []
+    for resource in dataset.resources:
+        if can_explore(resource):
+            resources.append(resource.id)
+    return theme.render('metadata.html', resources=resources)
 
 @template_hook('footer.snippets', when=can_explore_dataset)
 def load_explore_script(ctx):
