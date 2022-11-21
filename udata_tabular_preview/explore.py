@@ -1,5 +1,3 @@
-from flask import current_app
-
 from udata_tabular_preview.preview import TabularPreview
 
 tabular_preview = TabularPreview()
