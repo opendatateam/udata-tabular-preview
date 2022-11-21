@@ -1,7 +1,8 @@
 from flask import current_app
 
-from udata_tabular_preview.preview import can_preview
+from udata_tabular_preview.preview import TabularPreview
 
+tabular_preview = TabularPreview()
 
 def can_explore(resource):
-    return can_preview(resource)
+    return tabular_preview.can_preview(resource)
