@@ -27,7 +27,7 @@
 <script>
 import  { apify, configure, getData } from "@etalab/csvapi-front/src/csvapi";
 import { defineComponent, ref } from 'vue';
-import { tabular_csvapi_url } from "./config";
+import { tabular_csvapi_url, tabular_page_size } from "./config";
 
 export default defineComponent({
     props: {
@@ -48,7 +48,7 @@ export default defineComponent({
         /** @type {import("vue").Ref<number | null>} */
         const columnCount = ref(null);
         const loading = ref(true);
-        configure({csvapiUrl: tabular_csvapi_url});
+        configure({csvapiUrl: tabular_csvapi_url, pageSize: tabular_page_size});
         // TODO : remove when we're done or find a way to 
         const url = props.resource.latest.replace("http://dev.local:7000", "https://www.data.gouv.fr");
         apify(url).then(res => {

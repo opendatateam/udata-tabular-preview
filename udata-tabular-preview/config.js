@@ -17,3 +17,4 @@ function _meta(name) {
 }
 
 export const tabular_csvapi_url = _meta("tabular-csvapi-url");
+export const tabular_page_size = _meta("tabular-page-size");
