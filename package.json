@@ -15,7 +15,7 @@
     "postversion": "git push --follow-tags"
   },
   "devDependencies": {
-    "@etalab/csvapi-front": "nicolaskempf57/csvapi-front#feat/extract-csvapi-requests",
+    "@etalab/csvapi-front": "nicolaskempf57/csvapi-front#exploration-table-preprod",
     "@intlify/unplugin-vue-i18n": "^0.8.0",
     "@intlify/vite-plugin-vue-i18n": "^6.0.3",
     "@vitejs/plugin-legacy": "^2.3.1",
