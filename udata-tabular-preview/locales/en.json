@@ -1,6 +1,6 @@
 {
   "Preview of {name}": "Preview of {name}",
-  "{count} columns": "{count} columns",
-  "{count} rows": "{count} rows",
+  "{count} columns": "{count} columns | {count} column | {count} columns",
+  "{count} rows": "{count} rows | {count} row | {count} rows",
   "Explore data": "Explore data"
 }
