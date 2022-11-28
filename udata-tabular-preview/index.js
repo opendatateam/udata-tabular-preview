@@ -4,4 +4,4 @@ import Explore from "./explore.vue";
 import messages from '@intlify/unplugin-vue-i18n/messages';
 
 registerComponent("explore", Explore, "udata-tabular-preview", "explore");
-registerTranslation(messages);
+registerTranslation(messages, "udata-tabular-preview");
