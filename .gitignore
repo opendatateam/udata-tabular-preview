@@ -104,6 +104,3 @@ ENV/
 
 # Node
 node_modules/
-
-# Parcel
-.parcel-cache/
