@@ -1,8 +1,7 @@
-from flask import Blueprint
+from flask import render_template, Blueprint
 
 from udata import assets
 from udata.frontend import template_hook
-from udata_front import theme
 
 from udata_tabular_preview.explore import can_explore
 
@@ -25,11 +24,11 @@ def load_explore_script(ctx):
     for resource in dataset.resources:
         if can_explore(resource):
             resources.append(resource.id)
-    return theme.render('metadata.html', resources=resources)
+    return render_template('metadata.html', resources=resources)
 
 @template_hook('footer.snippets', when=can_explore_dataset)
 def load_explore_script(ctx):
-    return theme.render('script.html')
+    return render_template('script.html')
 
 @blueprint.record
 def init_preview(state):
