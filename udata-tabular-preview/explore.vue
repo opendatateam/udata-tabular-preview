@@ -39,8 +39,6 @@ export default defineComponent({
     setup(props) {
         /** @type {import("vue").Ref<Array>} */
         const columns = ref([]);
-        /** @type {import("vue").Ref<object | null>} */
-        const generalInformations = ref(null);
         /** @type {import("vue").Ref<Array>} */
         const rows = ref([]);
         /** @type {import("vue").Ref<number | null>} */
@@ -58,7 +56,6 @@ export default defineComponent({
                     if (res.ok) {
                         rows.value = res.rows;
                         columns.value = res.columns;
-                        generalInformations.value = res.general_infos;
                         rowCount.value = res.total;
                         columnCount.value = res.columns.length;
                     } else {
@@ -72,7 +69,6 @@ export default defineComponent({
             }
         }).catch(res => console.log(res));
         return {
-            generalInformations,
             columns,
             rows,
             rowCount,
