@@ -114,7 +114,7 @@ def assets(ctx):
     with ctx.cd(ROOT):
         ctx.run('npm run build', pty=True)
         ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp -R {src}/assets/ {static}'.format(**locals()))
+        ctx.run('cp -R {src}/assets/*.js {static}'.format(**locals()))
 
 
 @task(assets)
