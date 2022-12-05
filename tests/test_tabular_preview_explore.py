@@ -21,3 +21,11 @@ pytestmark = [
 def test_can_explore(mime):
     resource = ResourceFactory(mime=mime)
     assert can_explore(resource)
+
+@pytest.mark.parametrize('mime', DUMMY_MIMES)
+@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me')
+@pytest.mark.options(TABULAR_CSVAPI_URL='http://csvapi.me/')
+@pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=[])
+def test_cant_explore(mime):
+    resource = ResourceFactory(mime=mime)
+    assert not can_explore(resource)
