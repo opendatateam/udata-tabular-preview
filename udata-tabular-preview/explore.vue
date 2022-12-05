@@ -48,7 +48,7 @@ export default defineComponent({
         const loading = ref(true);
         configure({csvapiUrl: tabular_csvapi_url, pageSize: tabular_page_size});
         // TODO : remove when we're done or find a way to 
-        const url = props.resource.latest.replace("http://dev.local:7000", "https://www.data.gouv.fr");
+        const url = props.resource.url.replace("http://dev.local:7000", "https://www.data.gouv.fr");
         apify(url).then(res => {
             if (res.ok) {
                 configure({dataEndpoint: res.endpoint});
