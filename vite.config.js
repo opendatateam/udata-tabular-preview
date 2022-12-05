@@ -19,15 +19,16 @@ export default defineConfig({
         }),
     ],
     build: {
+        outDir: "udata_tabular_preview/static/udata-tabular-preview",
         rollupOptions: {
             input: "udata-tabular-preview/index.js",
             // make sure to externalize deps that shouldn't be bundled
             // into your library
             external: ['vue'],
             output: {
-                entryFileNames: `assets/[name].js`,
-                chunkFileNames: `assets/[name].js`,
-                assetFileNames: `assets/[name].[ext]`,
+                entryFileNames: `[name].js`,
+                chunkFileNames: `[name].js`,
+                assetFileNames: `[name].[ext]`,
                 // Provide global variables to use in the UMD build
                 // for externalized deps
                 globals: {
