@@ -10,8 +10,12 @@ class TabularPreview(PreviewPlugin):
     def server_url(self):
         return current_app.config.get('TABULAR_CSVAPI_URL')
 
+    @property
+    def preview_base_url(self):
+        return current_app.config.get('TABULAR_CSVAPI_FRONT_URL')
+
     def can_preview(self, resource):
-        has_config = bool(self.server_url)
+        has_config = bool(self.server_url) and bool(self.preview_base_url)
 
         supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
         extras_mime = resource.extras.get('check:headers:content-type')
@@ -32,10 +36,6 @@ class TabularPreview(PreviewPlugin):
         )
 
         return all((has_config, is_supported, is_allowed, size_ok))
-
-    @property
-    def preview_base_url(self):
-        return current_app.config.get('TABULAR_CSVAPI_FRONT_URL')
 
     def preview_url(self, resource):
         return f'{self.preview_base_url}/?url={quote_plus(resource.latest)}'
