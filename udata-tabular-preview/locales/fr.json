@@ -2,5 +2,6 @@
   "Preview of {name}": "Prévisualisation de {name}",
   "{count} columns": "{count} colonnes | {count} colonne | {count} colonnes",
   "{count} rows": "{count} lignes | {count} ligne | {count} lignes",
-  "Explore data": "Explorer les données"
+  "Explore data": "Explorer les données",
+  "The preview of this file failed to load.": ""
 }
