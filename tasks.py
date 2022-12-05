@@ -96,28 +96,34 @@ def qa(ctx):
 
 
 @task
-def csvapi_front(ctx):
-    '''Build csvapi-front assets'''
-    header('Copying csvapi-front assets')
-    src = "node_modules/@etalab/csvapi-front/dist"
-    static = 'udata_tabular_preview/static/csvapi-front'
+def assets_watch(ctx):
+    '''Build assets on change'''
+    header('Building udata-tabular-preview assets')
     with ctx.cd(ROOT):
-        ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp -R {src}/{{js,css}} {static}'.format(**locals()))
+        ctx.run('npm run dev', pty=True)
+
 
 @task
-def assets(ctx):
+def assets_build(ctx):
     '''Build assets'''
     header('Building udata-tabular-preview assets')
-    src = "dist"
-    static = 'udata_tabular_preview/static/udata-tabular-preview'
     with ctx.cd(ROOT):
         ctx.run('npm run build', pty=True)
-        ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp -R {src}/assets/*.js {static}'.format(**locals()))
 
 
-@task(assets)
+@task
+def i18n(ctx, update=False):
+    '''Extract translatable strings'''
+    header(i18n.__doc__)
+
+    # Front translations
+    info('Extract vue translations')
+    with ctx.cd(ROOT):
+        ctx.run('npm run i18n:extract')
+    success('Updated translations')
+
+
+@task(assets_build)
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header('Building a distribuable package')
