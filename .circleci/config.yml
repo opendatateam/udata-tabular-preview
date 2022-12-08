@@ -55,7 +55,7 @@ jobs:
 
   assets:
     docker:
-      - image: node:10
+      - image: node:16
     environment:
        BASH_ENV: /root/.bashrc
     steps:
