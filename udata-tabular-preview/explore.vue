@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { apify, configure, getData } from "@etalab/csvapi-front/src/csvapi";
+import { apify, configure, getData } from "@etalab/explore.data.gouv.fr/lib/csvapi";
 import { defineComponent, ref } from 'vue';
 import { tabular_csvapi_url, tabular_page_size } from "./config";
 import Loader from "./loader.vue";
