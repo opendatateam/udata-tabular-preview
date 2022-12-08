@@ -18,7 +18,7 @@ def can_explore_dataset(ctx):
 
 
 @template_hook('header.snippets', when=can_explore_dataset)
-def load_explore_script(ctx):
+def load_explore_metadata(ctx):
     dataset = ctx.get('dataset', None)
     resources = []
     for resource in dataset.resources:
@@ -26,9 +26,11 @@ def load_explore_script(ctx):
             resources.append(resource.id)
     return render_template('metadata.html', resources=resources)
 
+
 @template_hook('footer.snippets', when=can_explore_dataset)
 def load_explore_script(ctx):
     return render_template('script.html')
+
 
 @blueprint.record
 def init_preview(state):
