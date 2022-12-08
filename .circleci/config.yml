@@ -55,7 +55,7 @@ jobs:
 
   assets:
     docker:
-      - image: node:16
+      - image: udata/circleci:py3
     environment:
        BASH_ENV: /root/.bashrc
     steps:
@@ -73,7 +73,7 @@ jobs:
             - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install NodeJS and dependencies
-          command: npm install
+          command: nvm install && npm install
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
           paths:
@@ -87,6 +87,11 @@ jobs:
           root: .
           paths:
             - node_modules
+      - run:
+          name: Compile assets
+          command: |
+            nvm use
+            npm run build
 
   dist:
     docker:
