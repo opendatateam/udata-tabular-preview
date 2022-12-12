@@ -135,6 +135,18 @@ def dist(ctx, buildno=None):
         ctx.run(' '.join(cmd), pty=True)
     success('Distribution is available in dist directory')
 
+@task
+def pydist(ctx, buildno=None):
+    '''Perform python packaging (without compiling assets)'''
+    header('Building a distribuable package')
+    cmd = ['python setup.py']
+    if buildno:
+        cmd.append('egg_info -b {0}'.format(buildno))
+    cmd.append('bdist_wheel')
+    with ctx.cd(ROOT):
+        ctx.run(' '.join(cmd), pty=True)
+    success('Distribution is available in dist directory')
+
 
 @task(clean, qa, call(test, report=True), dist, default=True)
 def default(ctx):
