@@ -95,7 +95,7 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:py3
+      - image: udata/circleci:2-alpine
     environment:
        BASH_ENV: /root/.bashrc
     steps:
