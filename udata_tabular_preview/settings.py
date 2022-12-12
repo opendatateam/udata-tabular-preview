@@ -4,8 +4,8 @@ Default settings for udata-tabular-preview
 # csvapi instance URL
 TABULAR_CSVAPI_URL = None
 
-# csvapi-front instance URL
-TABULAR_CSVAPI_FRONT_URL = None
+# explore instance URL
+TABULAR_EXPLORE_URL = None
 
 # Whether or not to allow remote resources
 TABULAR_ALLOW_REMOTE = True

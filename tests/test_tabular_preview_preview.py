@@ -15,14 +15,14 @@ pytestmark = [
     pytest.mark.frontend,
 ]
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me')
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
 def expected_url(url):
     encoded_url = quote_plus(url)
     return 'http://preview.me/?url={0}'.format(encoded_url)
 
 
 @pytest.mark.parametrize('mime', DUMMY_MIMES)
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me')
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
 @pytest.mark.options(TABULAR_CSVAPI_URL='http://csvapi.me/')
 @pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=DUMMY_MIMES)
 def test_display_preview_for_tabular_resources(mime):
@@ -30,18 +30,18 @@ def test_display_preview_for_tabular_resources(mime):
     assert resource.preview_url == expected_url(resource.latest)
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL=None, TABULAR_CSVAPI_URL=None)
+@pytest.mark.options(TABULAR_EXPLORE_URL=None, TABULAR_CSVAPI_URL=None)
 def test_no_preview_if_no_conf():
     assert ResourceFactory(mime=MIME_TYPE).preview_url is None
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/')
 def test_no_preview_if_for_unknown_types():
     assert ResourceFactory(mime='not/known').preview_url is None
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/')
 def test_default_allow_remote_preview():
     resources = [
@@ -53,7 +53,7 @@ def test_default_allow_remote_preview():
         assert resource.preview_url == expected_url(resource.latest)
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/',
                      TABULAR_ALLOW_REMOTE=False)
 def test_allow_remote_preview_false():
@@ -64,7 +64,7 @@ def test_allow_remote_preview_false():
     assert remote.preview_url is None
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/')
 def test_display_preview_without_max_size():
     resource = ResourceFactory(mime=MIME_TYPE, filesize=2 * MAX_SIZE)
@@ -72,7 +72,7 @@ def test_display_preview_without_max_size():
     assert resource.preview_url == expected_url(resource.latest)
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_without_resource_size():
@@ -82,7 +82,7 @@ def test_display_preview_without_resource_size():
 
 
 @pytest.mark.parametrize('size', [MAX_SIZE - 1, MAX_SIZE])
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_with_max_size(size):
@@ -91,7 +91,7 @@ def test_display_preview_with_max_size(size):
     assert resource.preview_url == expected_url(resource.latest)
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_using_extras():
@@ -108,7 +108,7 @@ def test_display_preview_using_extras():
     assert resource.preview_url == expected_url(resource.latest)
 
 
-@pytest.mark.options(TABULAR_CSVAPI_FRONT_URL='http://preview.me',
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_no_preview_for_resource_over_max_size():

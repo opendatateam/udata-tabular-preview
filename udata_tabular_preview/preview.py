@@ -8,7 +8,7 @@ class TabularPreview(PreviewPlugin):
 
     @property
     def preview_base_url(self):
-        return current_app.config.get('TABULAR_CSVAPI_FRONT_URL')
+        return current_app.config.get('TABULAR_EXPLORE_URL')
 
     def can_preview(self, resource):
         has_config = (
