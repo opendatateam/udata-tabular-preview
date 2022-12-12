@@ -7,15 +7,14 @@ class TabularPreview(PreviewPlugin):
     fallback = True
 
     @property
-    def server_url(self):
-        return current_app.config.get('TABULAR_CSVAPI_URL')
-
-    @property
     def preview_base_url(self):
         return current_app.config.get('TABULAR_CSVAPI_FRONT_URL')
 
     def can_preview(self, resource):
-        has_config = bool(self.server_url) and bool(self.preview_base_url)
+        has_config = (
+                        bool(current_app.config.get('TABULAR_CSVAPI_URL'))
+                        and bool(self.preview_base_url)
+        )
 
         supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
         extras_mime = resource.extras.get('check:headers:content-type')
