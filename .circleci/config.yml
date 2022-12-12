@@ -95,13 +95,16 @@ jobs:
 
   dist:
     docker:
-      - image: udata/circleci:2-alpine
+      - image: udata/circleci:py3
     environment:
        BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
           at: .
+      - run:
+          name: Install NodeJS
+          command: nvm install && nvm use
       - run:
           name: Build a distributable package
           command: |
