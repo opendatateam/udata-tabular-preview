@@ -15,7 +15,6 @@ pytestmark = [
     pytest.mark.frontend,
 ]
 
-@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
 def expected_url(url):
     encoded_url = quote_plus(url)
     return 'http://preview.me/?url={0}'.format(encoded_url)
