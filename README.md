@@ -21,6 +21,7 @@ PLUGINS = ['tabular']
 You can control this plugin behavior with the following `udata.cfg` parameters:
 
 - **`TABULAR_CSVAPI_URL`**: The URL to your `csvapi` instance (without trailing slash). **ex:** `https://my.csvapi`
+- **`TABULAR_EXPLORE_URL`**: The URL to your `explore` instance (without trailing slash). **ex:** `https://my.explore`
 - **`TABULAR_ALLOW_REMOTE`**: Whether or not to allow remote resources preview. Default value is `True`
 - **`TABULAR_MAX_SIZE`**: Max allowed file size in bytes if defined. Default value is `None`
 - **`TABULAR_PAGE_SIZE`**: fetched data page size. Default to `5`
@@ -39,10 +40,22 @@ npm install
 Then you can package these assets with:
 
 ```shell
-inv assets
+inv assets-watch
 ```
 
 (You might need to relaunch these commands when you pull upstream changes).
+
+You can build a production-ready version of JS and CSS assets with:
+
+```shell
+inv assets-build
+```
+
+You should extract the vue-i18n language files after modifying this plugin with :
+
+```shell
+inv i18n
+```
 
 ### Python dependencies
 
