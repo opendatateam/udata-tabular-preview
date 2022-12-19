@@ -95,7 +95,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - udata-tabular-preview/static
+            - udata_tabular_preview/static
 
   dist:
     docker:
