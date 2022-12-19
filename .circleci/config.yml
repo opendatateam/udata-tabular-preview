@@ -92,6 +92,10 @@ jobs:
           command: |
             nvm use
             npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - udata-tabular-preview/static
 
   dist:
     docker:
