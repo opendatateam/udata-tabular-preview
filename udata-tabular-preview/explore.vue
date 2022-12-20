@@ -9,7 +9,7 @@
   <template v-if="!hasError && !loading">
     <div class="fr-table fr-table--no-background fr-p-0 fr-pt-0-5v fr-m-0">
       <table class="fr-mb-3w">
-        <caption class="fr-sr-only">{{ $t('Preview of {name}', { name: resource.name }) }}</caption>
+        <caption class="fr-sr-only">{{ $t('Preview of {name}', { name: resource.title }) }}</caption>
         <thead>
           <tr>
             <th scope="col" v-for="col in columns">{{ col }}</th>
@@ -22,7 +22,7 @@
         </tbody>
       </table>
     </div>
-    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle">
+    <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-2w">
       <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('{count} rows', rowCount) }}</div>
       <div class="fr-col-auto">
         <a :href="resource.preview_url" class="fr-btn fr-btn--icon-left fr-icon-test-tube-line">
