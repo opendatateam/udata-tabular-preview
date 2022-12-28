@@ -1,16 +1,20 @@
-from flask import current_app, url_for
+from flask import current_app
 from udata.core.dataset.preview import PreviewPlugin
+from urllib.parse import quote_plus
 
 
 class TabularPreview(PreviewPlugin):
     fallback = True
 
     @property
-    def server_url(self):
-        return current_app.config.get('TABULAR_CSVAPI_URL')
+    def preview_base_url(self):
+        return current_app.config.get('TABULAR_EXPLORE_URL')
 
     def can_preview(self, resource):
-        has_config = bool(self.server_url)
+        has_config = (
+                        bool(current_app.config.get('TABULAR_CSVAPI_URL'))
+                        and bool(self.preview_base_url)
+        )
 
         supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
         extras_mime = resource.extras.get('check:headers:content-type')
@@ -33,4 +37,4 @@ class TabularPreview(PreviewPlugin):
         return all((has_config, is_supported, is_allowed, size_ok))
 
     def preview_url(self, resource):
-        return url_for('tabular.preview', url=resource.url)
+        return f'{self.preview_base_url}/?url={quote_plus(resource.latest)}'

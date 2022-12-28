@@ -4,8 +4,8 @@ Default settings for udata-tabular-preview
 # csvapi instance URL
 TABULAR_CSVAPI_URL = None
 
-# Preview UI, one of 'csvapi-front', 'data
-TABULAR_UI = 'csvapi-front'
+# explore instance URL
+TABULAR_EXPLORE_URL = None
 
 # Whether or not to allow remote resources
 TABULAR_ALLOW_REMOTE = True
@@ -14,7 +14,7 @@ TABULAR_ALLOW_REMOTE = True
 TABULAR_MAX_SIZE = None
 
 # Default page size
-TABULAR_PAGE_SIZE = 50
+TABULAR_PAGE_SIZE = 5
 
 # Supported mimes
 TABULAR_SUPPORTED_MIME_TYPES = (

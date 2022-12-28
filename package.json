@@ -2,12 +2,31 @@
   "name": "udata-tabular-preview",
   "version": "1.0.0",
   "description": "udata tabular preview plugin",
-  "main": "index.js",
   "directories": {
     "test": "tests"
   },
-  "dependencies": {
-    "@etalab/csvapi-front": "0.6.3"
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "i18n:report": "vue-i18n-extract report",
+    "i18n:extract": "npm run i18n:report -- --add",
+    "preview": "vite preview",
+    "preversion": "npm run build",
+    "postversion": "git push --follow-tags"
+  },
+  "devDependencies": {
+    "@etalab/explore.data.gouv.fr": "^1.0.1-0",
+    "@etalab/udata-front-plugins-helper": "^1.0.1-3",
+    "@intlify/unplugin-vue-i18n": "^0.8.0",
+    "@intlify/vite-plugin-vue-i18n": "^6.0.3",
+    "@vitejs/plugin-legacy": "^2.3.1",
+    "@vitejs/plugin-vue": "^3.2.0",
+    "terser": "^5.15.1",
+    "vite": "^3.2.3",
+    "vue": "^3.2.45",
+    "vue-content-loader": "^2.0.1",
+    "vue-i18n": "^9.2.2",
+    "vue-i18n-extract": "^2.0.7"
   },
   "repository": {
     "type": "git",
@@ -18,5 +37,6 @@
   "bugs": {
     "url": "https://github.com/opendatateam/udata-tabular-preview/issues"
   },
+  "browserslist": "> 0.1% in FR, last 15 versions, Firefox ESR, not dead",
   "homepage": "https://github.com/opendatateam/udata-tabular-preview#readme"
 }

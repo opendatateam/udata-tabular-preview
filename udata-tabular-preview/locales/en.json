@@ -1,0 +1,7 @@
+{
+  "Preview of {name}": "Preview of {name}",
+  "{count} columns": "{count} columns | {count} column | {count} columns",
+  "Showing the first {shown} of {count} rows": "No rows in file | Showing the only row | Showing the first {shown} of {count} rows",
+  "Explore data": "Explore data",
+  "The preview of this file failed to load.": "The preview of this file failed to load."
+}

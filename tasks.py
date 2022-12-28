@@ -96,24 +96,48 @@ def qa(ctx):
 
 
 @task
-def csvapi_front(ctx):
-    '''Build csvapi-front assets'''
-    header('Copying csvapi-front assets')
-    src = "node_modules/@etalab/csvapi-front/dist"
-    static = 'udata_tabular_preview/static/csvapi-front'
+def assets_watch(ctx):
+    '''Build assets on change'''
+    header('Building udata-tabular-preview assets')
     with ctx.cd(ROOT):
-        ctx.run('mkdir -p {}'.format(static))
-        ctx.run('cp -R {src}/{{js,css}} {static}'.format(**locals()))
+        ctx.run('npm run dev', pty=True)
 
 
-@task(csvapi_front)
-def assets(ctx):
+@task
+def assets_build(ctx):
     '''Build assets'''
+    header('Building udata-tabular-preview assets')
+    with ctx.cd(ROOT):
+        ctx.run('npm run build', pty=True)
 
 
-@task(assets)
+@task
+def i18n(ctx, update=False):
+    '''Extract translatable strings'''
+    header(i18n.__doc__)
+
+    # Front translations
+    info('Extract vue translations')
+    with ctx.cd(ROOT):
+        ctx.run('npm run i18n:extract')
+    success('Updated translations')
+
+
+@task(assets_build)
 def dist(ctx, buildno=None):
     '''Package for distribution'''
+    header('Building a distribuable package')
+    cmd = ['python setup.py']
+    if buildno:
+        cmd.append('egg_info -b {0}'.format(buildno))
+    cmd.append('bdist_wheel')
+    with ctx.cd(ROOT):
+        ctx.run(' '.join(cmd), pty=True)
+    success('Distribution is available in dist directory')
+
+@task
+def pydist(ctx, buildno=None):
+    '''Perform python packaging (without compiling assets)'''
     header('Building a distribuable package')
     cmd = ['python setup.py']
     if buildno:
