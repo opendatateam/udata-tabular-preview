@@ -34,15 +34,16 @@
 </template>
 
 <script>
-import { apify, configure, getData } from "@etalab/explore.data.gouv.fr/lib/csvapi";
 import { defineComponent, ref } from 'vue';
-import { tabular_csvapi_url, tabular_page_size } from "./config";
+import { tabular_page_size } from "./config";
+import requestCsvapi from "./csvapi";
 import Loader from "./loader.vue";
 
 export default defineComponent({
   components: {Loader},
   props: {
     resource: {
+      /** @type {import("vue").PropType<{title: string, preview_url:string, url: string}>} */
       type: Object,
       required: true
     }
@@ -58,29 +59,17 @@ export default defineComponent({
     const columnCount = ref(null);
     const loading = ref(true);
     const hasError = ref(false);
-    configure({ csvapiUrl: tabular_csvapi_url, pageSize: tabular_page_size });
-    apify(props.resource.url).then(res => {
+    requestCsvapi(props.resource).then(res => {
       if (res.ok) {
-        configure({ dataEndpoint: res.endpoint });
-        return getData("apify").then(res => {
-          if (res.ok) {
-            rows.value = res.rows;
-            columns.value = res.columns;
-            rowCount.value = res.total;
-            columnCount.value = res.columns.length;
-          } else {
-            hasError.value = true;
-          }
-        }).catch(() => hasError.value = true)
-        .finally(() => loading.value = false);
+        rows.value = res.rows;
+        columns.value = res.columns;
+        rowCount.value = res.total;
+        columnCount.value = res.columns.length;
       } else {
         hasError.value = true;
-        loading.value = false;
       }
-    }).catch(() => {
-      hasError.value = true;
-      loading.value = false;
-    });
+    }).catch(() => hasError.value = true)
+    .finally(() => loading.value = false);
     return {
       hasError,
       loading,
