@@ -7,7 +7,7 @@
   </div>
   <Loader v-if="loading" />
   <div v-if="!hasError && !loading" class="fr-grid-row fr-grid-row--gutters">
-    <div class="fr-col-3" v-for="column in columns">
+    <div class="fr-col-12 fr-col-sm-6 fr-col-md-4 fr-col-lg-3" v-for="column in columns">
       <h5 class="fr-text--sm fr-text--bold fr-mt-0 fr-mb-1v">{{column}}</h5>
       <code class="code">
         {{ columnsInfos[column].format }}
