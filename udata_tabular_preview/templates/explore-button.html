@@ -1,0 +1,20 @@
+<div class="fr-col-auto fr-ml-3v">
+    <a
+        class="fr-btn fr-btn--sm fr-icon-external-link-line fr-btn--icon-right fr-hidden flex-sm"
+        href="{{ url }}"
+        target="_blank"
+    >
+        {{ _('open on {netloc}').format(
+            netloc=netloc
+        ) }}
+    </a>
+    <a
+    class="fr-btn fr-btn--sm fr-icon-external-link-line fr-hidden-sm"
+    href="{{ url }}"
+    target="_blank"
+    >
+        {{ _('open on {netloc}').format(
+            netloc=netloc
+        ) }}
+    </a>
+</div>

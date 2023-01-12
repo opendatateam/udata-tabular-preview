@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import current_app, render_template, Blueprint
 
 from udata import assets
 from udata.frontend import template_hook
@@ -6,6 +6,8 @@ from udata.frontend import template_hook
 from udata_tabular_preview.explore import can_explore
 
 from . import settings as DEFAULTS
+from urllib.parse import urlsplit
+
 
 blueprint = Blueprint('tabular', __name__, url_prefix='/tabular',
                       template_folder='templates',
@@ -30,6 +32,19 @@ def load_explore_metadata(ctx):
 @template_hook('footer.snippets', when=can_explore_dataset)
 def load_explore_script(ctx):
     return render_template('script.html')
+
+
+@template_hook('dataset.display.explore-button', when=can_explore_dataset)
+def load_explore_button(ctx):
+    dataset = ctx.get('dataset', None)
+    url = ""
+    explore_url = current_app.config.get('TABULAR_EXPLORE_URL')
+    netloc = urlsplit(explore_url).netloc
+    for resource in dataset.resources:
+        if can_explore(resource):
+            url = resource.preview_url
+            break
+    return render_template('explore-button.html', netloc=netloc, url=url)
 
 
 @blueprint.record
