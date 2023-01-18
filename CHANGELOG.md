@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.0.0 (2023-01-18)
 
 - :warning: **Breaking change** Change preview behaviour [#14](https://github.com/opendatateam/udata-tabular-preview/pull/14)
