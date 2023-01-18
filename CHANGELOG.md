@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.0.0 (2023-01-18)
 
 - :warning: **Breaking change** Change preview behaviour [#14](https://github.com/opendatateam/udata-tabular-preview/pull/14)
     - remove `preview` route
