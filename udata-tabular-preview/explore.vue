@@ -16,18 +16,16 @@
               <div class="fr-grid-row fr-grid-row--middle no-wrap">
                 <button
                   class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-my-n1w"
-                  :class="{'fr-btn--secondary-grey-500': !isSortedBy(col)}"
+                  :class="{
+                    'fr-btn--secondary-grey-500': !isSortedBy(col),
+                    'fr-btn--icon-right': isSortedBy(col),
+                    'fr-icon-arrow-down-line': isSortedBy(col) && sortDesc,
+                    'fr-icon-arrow-up-line': isSortedBy(col) && !sortDesc
+                    }"
                   @click="sortbyfield(col)"
                 >
                   {{ col }}
-                </button>
-                <button
-                  class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-arrow-down-line"
-                  :class="{'fr-icon-arrow-down-line': sortDesc, 'fr-icon-arrow-up-line': !sortDesc }"
-                  v-if="isSortedBy(col)"
-                  @click="sortbyfield(col)"
-                >
-                  {{ $t("Sort") }}
+                  <span class="fr-sr-only">{{ sortDesc ? $t("Sort ascending") : $t("Sort descending") }}</span>
                 </button>
               </div>
             </th>
