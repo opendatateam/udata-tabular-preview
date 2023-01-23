@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add new data structure component [#19](https://github.com/opendatateam/udata-tabular-preview/pull/19)
 
 ## 3.0.0 (2023-01-18)
 
