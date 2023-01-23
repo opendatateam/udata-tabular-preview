@@ -1,0 +1,3 @@
+files:
+  - source: /udata-tabular-preview/locales/en.json
+    translation: /udata-tabular-preview/locales/%two_letters_code%.json

@@ -2,8 +2,16 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.0.0 (2023-01-18)
+
+- :warning: **Breaking change** Change preview behaviour [#14](https://github.com/opendatateam/udata-tabular-preview/pull/14)
+    - remove `preview` route
+    - add exploration preview Vue component
+    - add explorable_ressources metadata
 - Replace mongo legacy image in CI [#13](https://github.com/opendatateam/udata-tabular-preview/pull/13)
-- Add exploration preview component and explorable_ressources metadata [#14](https://github.com/opendatateam/udata-tabular-preview/pull/14)
+- Update json5 to fix CVE-2022-46175 [#16](https://github.com/opendatateam/udata-tabular-preview/pull/16)
 
 ## 2.0.3 (2022-07-11)
 
