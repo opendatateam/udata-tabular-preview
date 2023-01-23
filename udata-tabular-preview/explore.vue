@@ -12,7 +12,25 @@
         <caption class="fr-sr-only">{{ $t('Preview of {name}', { name: resource.title }) }}</caption>
         <thead>
           <tr>
-            <th scope="col" v-for="col in columns">{{ col }}</th>
+            <th scope="col" v-for="col in columns">
+              <div class="fr-grid-row fr-grid-row--middle no-wrap">
+                <button
+                  class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-my-n1w"
+                  :class="{'fr-btn--secondary-grey-500': !isSortedBy(col)}"
+                  @click="sortbyfield(col)"
+                >
+                  {{ col }}
+                </button>
+                <button
+                  class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-arrow-down-line"
+                  :class="{'fr-icon-arrow-down-line': sortDesc, 'fr-icon-arrow-up-line': !sortDesc }"
+                  v-if="isSortedBy(col)"
+                  @click="sortbyfield(col)"
+                >
+                  {{ $t("Sort") }}
+                </button>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +52,7 @@
 </template>
 
 <script>
-import { apify, configure, getData } from "@etalab/explore.data.gouv.fr/lib/csvapi";
+import { apify, configure, getData, sort } from "@etalab/explore.data.gouv.fr/lib/csvapi";
 import { defineComponent, ref } from 'vue';
 import { tabular_csvapi_url, tabular_page_size } from "./config";
 import Loader from "./loader.vue";
@@ -58,29 +76,67 @@ export default defineComponent({
     const columnCount = ref(null);
     const loading = ref(true);
     const hasError = ref(false);
-    configure({ csvapiUrl: tabular_csvapi_url, pageSize: tabular_page_size });
-    apify(props.resource.url).then(res => {
+
+    /** @type {import("vue").Ref<string | null>} */
+    const sortBy = ref(null);
+    const sortDesc = ref(false);
+
+    /**
+     *
+     * @param {string} col
+     */
+    const sortbyfield = (col) => {
+      sortDesc.value = !sortDesc.value
+      if(sortBy.value !== col) {
+        sortDesc.value = false
+      }
+      sortBy.value = col;
+      return sort(sortBy.value, sortDesc.value).then(res => {
+        update(res);
+      }).catch(() => hasError.value = true)
+      .finally(() => loading.value = false);
+    };
+
+    const requestData = () => {
+      loading.value = true;
+      return getData("apify").then(res => {
+        update(res);
+      }).catch(() => hasError.value = true)
+      .finally(() => loading.value = false);
+    }
+
+    const update = (res) => {
       if (res.ok) {
-        configure({ dataEndpoint: res.endpoint });
-        return getData("apify").then(res => {
-          if (res.ok) {
-            rows.value = res.rows;
-            columns.value = res.columns;
-            rowCount.value = res.total;
-            columnCount.value = res.columns.length;
-          } else {
-            hasError.value = true;
-          }
-        }).catch(() => hasError.value = true)
-        .finally(() => loading.value = false);
-      } else {
+          rows.value = res.rows;
+          columns.value = res.columns;
+          rowCount.value = res.total;
+          columnCount.value = res.columns.length;
+        } else {
+          hasError.value = true;
+        }
+    }
+
+    const requestApify = () => {
+      return apify(props.resource.url).then(res => {
+        if (res.ok) {
+          configure({ dataEndpoint: res.endpoint });
+          return requestData();
+        } else {
+          hasError.value = true;
+          loading.value = false;
+        }
+      }).catch(() => {
         hasError.value = true;
         loading.value = false;
-      }
-    }).catch(() => {
-      hasError.value = true;
-      loading.value = false;
-    });
+      });
+    }
+
+    const isSortedBy = (col) => col === sortBy.value;
+
+    configure({ csvapiUrl: tabular_csvapi_url, pageSize: tabular_page_size });
+
+    requestApify();
+
     return {
       hasError,
       loading,
@@ -89,6 +145,9 @@ export default defineComponent({
       rowCount,
       columnCount,
       tabular_page_size,
+      sortbyfield,
+      isSortedBy,
+      sortDesc,
     }
   }
 });
