@@ -23,7 +23,7 @@
       </table>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
-      <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('Showing the first {shown} of {count} rows', {shown: Math.min(tabular_page_size, rowCount), count: rowCount}) }}</div>
+      <div class="fr-col fr-text--bold">{{ $t('{count} columns', columnCount) }} — {{ $t('Showing the first {shown} of {count} rows', {shown: Math.min(tabular_page_size, rowCount), count: rowCount}) }}</div>
       <div class="fr-col-auto">
         <a :href="resource.preview_url" class="fr-btn fr-btn--icon-left fr-icon-test-tube-line">
           {{ $t("Explore data") }}
