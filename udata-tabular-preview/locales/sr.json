@@ -1,7 +1,8 @@
 {
   "Preview of {name}": "",
   "{count} columns": "",
-  "{count} rows": "",
   "Explore data": "",
-  "The preview of this file failed to load.": ""
+  "The preview of this file failed to load.": "",
+  "The data structure of this file failed to load.": "",
+  "Showing the first {shown} of {count} rows": ""
 }
