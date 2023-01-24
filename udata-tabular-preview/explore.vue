@@ -84,8 +84,9 @@ export default defineComponent({
      * @param {string} col
      */
     const sortbyfield = (col) => {
-      sortDesc.value = !sortDesc.value
-      if(sortBy.value !== col) {
+      if(sortBy.value == col) {
+        sortDesc.value = !sortDesc.value
+      } else {
         sortDesc.value = false
       }
       sortBy.value = col;
