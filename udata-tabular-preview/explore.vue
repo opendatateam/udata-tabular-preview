@@ -22,8 +22,16 @@
         </tbody>
       </table>
     </div>
+    <Pagination
+      class="fr-mt-3w"
+      v-if="totalRows > pageSize"
+      :page="currentPage"
+      :pageSize="pageSize"
+      :totalResults="totalRows"
+      :changePage="changeExplorePage"
+    />
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
-      <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('Showing the first {shown} of {count} rows', {shown: Math.min(tabular_page_size, rowCount), count: rowCount}) }}</div>
+      <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('{count} rows', rowCount) }}</div>
       <div class="fr-col-auto">
         <a :href="resource.preview_url" class="fr-btn fr-btn--icon-left fr-icon-test-tube-line">
           {{ $t("Explore data") }}
@@ -34,13 +42,14 @@
 </template>
 
 <script>
-import { apify, configure, getData } from "@etalab/explore.data.gouv.fr/lib/csvapi";
+import { apify, changePage, configure, getData } from "@etalab/explore.data.gouv.fr/lib/csvapi";
+import { Pagination } from "@etalab/udata-front-plugins-helper";
 import { defineComponent, ref } from 'vue';
 import { tabular_csvapi_url, tabular_page_size } from "./config";
 import Loader from "./loader.vue";
 
 export default defineComponent({
-  components: {Loader},
+  components: {Loader, Pagination},
   props: {
     resource: {
       type: Object,
@@ -58,20 +67,44 @@ export default defineComponent({
     const columnCount = ref(null);
     const loading = ref(true);
     const hasError = ref(false);
-    configure({ csvapiUrl: tabular_csvapi_url, pageSize: tabular_page_size });
+    const currentPage = ref(1);
+    const pageSize = tabular_page_size;
+    const totalRows = ref(0);
+
+    const changeExplorePage = (page) => {
+      const res = changePage(page);
+      if(res) {
+        res.then(updateData)
+        .catch(() => hasError.value = true)
+        .finally(() => loading.value = false);
+      }
+      currentPage.value = page;
+    }
+
+    /**
+     *
+     * @param {import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiResponse} response
+     */
+    const updateData = (response) => {
+      if (response.ok) {
+        rows.value = response.rows;
+        columns.value = response.columns;
+        rowCount.value = response.total;
+        columnCount.value = response.columns.length;
+        totalRows.value = response.total;
+        configure({totalRows: totalRows.value});
+      } else {
+        hasError.value = true;
+      }
+    }
+
+    configure({ csvapiUrl: tabular_csvapi_url, pageSize, currentPage: currentPage.value });
     apify(props.resource.url).then(res => {
       if (res.ok) {
         configure({ dataEndpoint: res.endpoint });
-        return getData("apify").then(res => {
-          if (res.ok) {
-            rows.value = res.rows;
-            columns.value = res.columns;
-            rowCount.value = res.total;
-            columnCount.value = res.columns.length;
-          } else {
-            hasError.value = true;
-          }
-        }).catch(() => hasError.value = true)
+        return getData("apify")
+        .then(updateData)
+        .catch(() => hasError.value = true)
         .finally(() => loading.value = false);
       } else {
         hasError.value = true;
@@ -81,6 +114,7 @@ export default defineComponent({
       hasError.value = true;
       loading.value = false;
     });
+
     return {
       hasError,
       loading,
@@ -88,7 +122,10 @@ export default defineComponent({
       rows,
       rowCount,
       columnCount,
-      tabular_page_size,
+      currentPage,
+      pageSize,
+      totalRows,
+      changeExplorePage,
     }
   }
 });

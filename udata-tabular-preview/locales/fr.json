@@ -1,7 +1,7 @@
 {
   "Preview of {name}": "Prévisualisation de {name}",
   "{count} columns": "{count} colonnes | {count} colonne | {count} colonnes",
-  "Showing the first {shown} of {count} rows": "Pas de ligne dans le fichier | Affichage de la seule ligne | Affichage des {shown} premières lignes sur {count}",
   "Explore data": "Explorer les données",
-  "The preview of this file failed to load.": "La prévisualisation de ce fichier n'a pas pu être chargée."
+  "The preview of this file failed to load.": "La prévisualisation de ce fichier n'a pas pu être chargée.",
+  "{count} rows": ""
 }
