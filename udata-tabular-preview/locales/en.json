@@ -3,5 +3,7 @@
   "{count} columns": "{count} columns | {count} column | {count} columns",
   "Explore data": "Explore data",
   "The preview of this file failed to load.": "The preview of this file failed to load.",
-  "{count} rows": "{count} rows | {count} row | {count} rows"
+  "{count} rows": "{count} rows | {count} row | {count} rows",
+  "Sort ascending": "Sort ascending",
+  "Sort descending": "Sort descending"
 }
