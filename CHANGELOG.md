@@ -3,6 +3,7 @@
 ## Current (in progress)
 
 - Add sort to exploration preview component [#20](https://github.com/opendatateam/udata-tabular-preview/pull/20)
+- Add pagination to exploration preview component [#21](https://github.com/opendatateam/udata-tabular-preview/pull/21)
 
 ## 3.0.0 (2023-01-18)
 
