@@ -40,10 +40,10 @@
     </div>
     <Pagination
       class="fr-mt-3w"
-      v-if="totalRows > pageSize"
+      v-if="rowCount > pageSize"
       :page="currentPage"
       :pageSize="pageSize"
-      :totalResults="totalRows"
+      :totalResults="rowCount"
       :changePage="changeExplorePage"
     />
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
@@ -85,7 +85,6 @@ export default defineComponent({
     const hasError = ref(false);
     const currentPage = ref(1);
     const pageSize = tabular_page_size;
-    const totalRows = ref(0);
     /** @type {import("vue").Ref<string | null>} */
     const sortBy = ref(null);
     const sortDesc = ref(false);
@@ -100,8 +99,7 @@ export default defineComponent({
           columns.value = res.columns;
           rowCount.value = res.total;
           columnCount.value = res.columns.length;
-          totalRows.value = res.total;
-          configure({totalRows: totalRows.value});
+          configure({totalRows: rowCount.value});
         } else {
           hasError.value = true;
         }
@@ -176,7 +174,6 @@ export default defineComponent({
       sortDesc,
       currentPage,
       pageSize,
-      totalRows,
       changeExplorePage,
     };
   }
