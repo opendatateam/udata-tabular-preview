@@ -37,13 +37,9 @@ def load_explore_script(ctx):
 @template_hook('dataset.display.explore-button', when=can_explore_dataset)
 def load_explore_button(ctx):
     dataset = ctx.get('dataset', None)
-    url = ""
     explore_url = current_app.config.get('TABULAR_EXPLORE_URL')
     netloc = urlsplit(explore_url).netloc
-    for resource in dataset.resources:
-        if can_explore(resource):
-            url = resource.preview_url
-            break
+    url = next(res.preview_url for res in dataset.resources if can_explore(res))
     return render_template('explore-button.html', netloc=netloc, url=url)
 
 
