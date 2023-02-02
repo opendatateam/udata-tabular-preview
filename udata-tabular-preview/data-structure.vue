@@ -41,7 +41,6 @@ export default defineComponent({
           if (res.ok) {
             columns.value = res.columns;
             columnsInfos.value = res.columns_infos;
-            console.log(res);
           } else {
             hasError.value = true;
           }
