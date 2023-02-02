@@ -3,7 +3,7 @@
   "{count} columns": "{count} colonnes | {count} colonne | {count} colonnes",
   "Explore data": "Explorer les données",
   "The preview of this file failed to load.": "La prévisualisation de ce fichier n'a pas pu être chargée.",
-  "{count} rows": "{count} rows | {count} row | {count} rows",
-  "Sort ascending": "Sort ascending",
-  "Sort descending": "Sort descending"
+  "{count} rows": "{count} lignes | {count} ligne | {count} lignes",
+  "Sort ascending": "Trier par ordre croissant",
+  "Sort descending": "Trier par ordre décroissant"
 }
