@@ -60,7 +60,7 @@
 <script>
 import { apify, changePage, configure, getData, sort } from "@etalab/explore.data.gouv.fr/lib/csvapi";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { tabular_csvapi_url, tabular_page_size } from "./config";
 import Loader from "./loader.vue";
 
@@ -77,17 +77,31 @@ export default defineComponent({
     const columns = ref([]);
     /** @type {import("vue").Ref<Array>} */
     const rows = ref([]);
-    /** @type {import("vue").Ref<number | null>} */
-    const rowCount = ref(null);
+    const rowCount = ref(0);
     /** @type {import("vue").Ref<number | null>} */
     const columnCount = ref(null);
     const loading = ref(true);
     const hasError = ref(false);
     const currentPage = ref(1);
-    const pageSize = tabular_page_size;
+    /** @type {import("vue").Ref<string | null>} */
+    const dataEndpoint = ref(null);
+    const pageSize = Number.parseInt(tabular_page_size ?? "10");
     /** @type {import("vue").Ref<string | null>} */
     const sortBy = ref(null);
     const sortDesc = ref(false);
+    /** @type {import("vue").ComputedRef<import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiRequestConfiguration>} */
+    const config = computed(() => {
+      return {
+        csvapiUrl: tabular_csvapi_url,
+        dataEndpoint: dataEndpoint.value,
+        filters: [],
+        page: currentPage.value,
+        pageSize: pageSize,
+        sortBy: sortBy.value,
+        sortDesc: sortDesc.value,
+        totalRows: rowCount.value,
+      };
+    });
 
     /**
      *
@@ -99,13 +113,13 @@ export default defineComponent({
           columns.value = res.columns;
           rowCount.value = res.total;
           columnCount.value = res.columns.length;
-          configure({totalRows: rowCount.value});
         } else {
           hasError.value = true;
         }
     }
 
     const changeExplorePage = (page) => {
+      configure(config.value);
       const res = changePage(page);
       if(res) {
         res.then(update)
@@ -126,6 +140,7 @@ export default defineComponent({
         sortDesc.value = false
       }
       sortBy.value = col;
+      configure(config.value);
       return sort(sortBy.value, sortDesc.value).then(res => {
         update(res);
         currentPage.value = 1;
@@ -135,6 +150,7 @@ export default defineComponent({
 
     const requestData = () => {
       loading.value = true;
+      configure(config.value);
       return getData("apify").then(res => {
         update(res);
       }).catch(() => hasError.value = true)
@@ -142,9 +158,10 @@ export default defineComponent({
     }
 
     const requestApify = () => {
+      configure(config.value);
       return apify(props.resource.url).then(res => {
         if (res.ok) {
-          configure({ dataEndpoint: res.endpoint });
+          dataEndpoint.value = res.endpoint;
           return requestData();
         } else {
           hasError.value = true;
@@ -157,8 +174,6 @@ export default defineComponent({
     }
 
     const isSortedBy = (col) => col === sortBy.value;
-
-    configure({ csvapiUrl: tabular_csvapi_url, pageSize, currentPage: currentPage.value });
 
     requestApify();
 
