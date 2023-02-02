@@ -25,9 +25,11 @@ jobs:
           - py-cache-v2-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install python dependencies
+          # FIXME: For now, we fix setuptools due to https://github.com/etalab/data.gouv.fr/issues/1041
           command: |
             virtualenv venv
             source venv/bin/activate
+            pip install setuptools==66.1.1
             pip install -e . || pip install -e .
             pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
       - save_cache:

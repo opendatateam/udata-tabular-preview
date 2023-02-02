@@ -1,8 +1,10 @@
 {
   "Preview of {name}": "",
   "{count} columns": "",
-  "Showing the first {shown} of {count} rows": "",
   "Explore data": "",
   "The preview of this file failed to load.": "",
+  "{count} rows": "",
+  "Sort ascending": "",
+  "Sort descending": "",
   "The data structure of this file failed to load.": ""
 }

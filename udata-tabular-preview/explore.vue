@@ -12,7 +12,23 @@
         <caption class="fr-sr-only">{{ $t('Preview of {name}', { name: resource.title }) }}</caption>
         <thead>
           <tr>
-            <th scope="col" v-for="col in columns">{{ col }}</th>
+            <th scope="col" v-for="col in columns">
+              <div class="fr-grid-row fr-grid-row--middle no-wrap">
+                <button
+                  class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-my-n1w"
+                  :class="{
+                    'fr-btn--secondary-grey-500': !isSortedBy(col),
+                    'fr-btn--icon-right': isSortedBy(col),
+                    'fr-icon-arrow-down-line': isSortedBy(col) && sortDesc,
+                    'fr-icon-arrow-up-line': isSortedBy(col) && !sortDesc
+                    }"
+                  @click="sortbyfield(col)"
+                >
+                  {{ col }}
+                  <span class="fr-sr-only">{{ sortDesc ? $t("Sort ascending") : $t("Sort descending") }}</span>
+                </button>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -22,8 +38,16 @@
         </tbody>
       </table>
     </div>
+    <Pagination
+      class="fr-mt-3w"
+      v-if="rowCount > pageSize"
+      :page="currentPage"
+      :pageSize="pageSize"
+      :totalResults="rowCount"
+      :changePage="changeExplorePage"
+    />
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
-      <div class="fr-col fr-text--bold">{{ $t('{count} columns', columnCount) }} — {{ $t('Showing the first {shown} of {count} rows', {shown: Math.min(tabular_page_size, rowCount), count: rowCount}) }}</div>
+      <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('{count} rows', rowCount) }}</div>
       <div class="fr-col-auto">
         <a :href="resource.preview_url" class="fr-btn fr-btn--icon-left fr-icon-test-tube-line">
           {{ $t("Explore data") }}
@@ -34,13 +58,15 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
-import { tabular_page_size } from "./config";
+import { apify, changePage, configure, getData, sort } from "@etalab/explore.data.gouv.fr/lib/csvapi";
+import { Pagination } from "@etalab/udata-front-plugins-helper";
+import { computed, defineComponent, ref } from 'vue';
+import { tabular_csvapi_url, tabular_page_size } from "./config";
 import requestCsvapi from "./csvapi";
 import Loader from "./loader.vue";
 
 export default defineComponent({
-  components: {Loader},
+  components: {Loader, Pagination},
   props: {
     resource: {
       /** @type {import("vue").PropType<{title: string, preview_url:string, url: string}>} */
@@ -53,23 +79,86 @@ export default defineComponent({
     const columns = ref([]);
     /** @type {import("vue").Ref<Array>} */
     const rows = ref([]);
-    /** @type {import("vue").Ref<number | null>} */
-    const rowCount = ref(null);
+    const rowCount = ref(0);
     /** @type {import("vue").Ref<number | null>} */
     const columnCount = ref(null);
     const loading = ref(true);
     const hasError = ref(false);
-    requestCsvapi(props.resource).then(res => {
+    const currentPage = ref(1);
+    /** @type {import("vue").Ref<string | null>} */
+    const dataEndpoint = ref(null);
+    const pageSize = Number.parseInt(tabular_page_size ?? "10");
+    /** @type {import("vue").Ref<string | null>} */
+    const sortBy = ref(null);
+    const sortDesc = ref(false);
+    /** @type {import("vue").ComputedRef<import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiRequestConfiguration>} */
+    const config = computed(() => {
+      return {
+        csvapiUrl: tabular_csvapi_url,
+        dataEndpoint: dataEndpoint.value,
+        filters: [],
+        page: currentPage.value,
+        pageSize: pageSize,
+        sortBy: sortBy.value,
+        sortDesc: sortDesc.value,
+        totalRows: rowCount.value,
+      };
+    });
+
+    /**
+     *
+     * @param {import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiResponse} res
+     */
+    const update = (res) => {
       if (res.ok) {
-        rows.value = res.rows;
-        columns.value = res.columns;
-        rowCount.value = res.total;
-        columnCount.value = res.columns.length;
-      } else {
-        hasError.value = true;
+          rows.value = res.rows;
+          columns.value = res.columns;
+          rowCount.value = res.total;
+          columnCount.value = res.columns.length;
+        } else {
+          hasError.value = true;
+        }
+    }
+
+    const changeExplorePage = (page) => {
+      configure(config.value);
+      const res = changePage(page);
+      if(res) {
+        res.then(update)
+        .catch(() => hasError.value = true)
+        .finally(() => loading.value = false);
       }
-    }).catch(() => hasError.value = true)
-    .finally(() => loading.value = false);
+      currentPage.value = page;
+    }
+
+    /**
+     *
+     * @param {string} col
+     */
+    const sortbyfield = (col) => {
+      if(sortBy.value == col) {
+        sortDesc.value = !sortDesc.value
+      } else {
+        sortDesc.value = false
+      }
+      sortBy.value = col;
+      configure(config.value);
+      return sort(sortBy.value, sortDesc.value)
+        .then(res => {
+          update(res);
+          currentPage.value = 1;
+        }).catch(() => hasError.value = true)
+        .finally(() => loading.value = false);
+    };
+
+    const isSortedBy = (col) => col === sortBy.value;
+
+    configure(config.value);
+    requestCsvapi(props.resource)
+      .then(update)
+      .catch(() => hasError.value = true)
+      .finally(() => loading.value = false);
+
     return {
       hasError,
       loading,
@@ -77,8 +166,13 @@ export default defineComponent({
       rows,
       rowCount,
       columnCount,
-      tabular_page_size,
-    }
+      sortbyfield,
+      isSortedBy,
+      sortDesc,
+      currentPage,
+      pageSize,
+      changeExplorePage,
+    };
   }
 });
 </script>
