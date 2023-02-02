@@ -44,7 +44,7 @@
       :page="currentPage"
       :pageSize="pageSize"
       :totalResults="rowCount"
-      :changePage="changeExplorePage"
+      :changePage="changePage"
     />
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
       <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('{count} rows', rowCount) }}</div>

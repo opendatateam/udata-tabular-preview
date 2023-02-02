@@ -1,7 +1,13 @@
 import { apify, configure, getData } from "@etalab/explore.data.gouv.fr/lib/csvapi";
 
 /**
- * @type {Map<string, Promise<import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiResponse>>}
+ * @typedef {object} CsvapiResponseWithEndpoint
+ * @property {string} endpoint - the endpoint for further requests
+ * @property {Promise<import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiResponse>} data - data from the first call
+ */
+
+/**
+ * @type {Map<string, Promise<CsvapiResponseWithEndpoint>>}
  */
 const csvapiRequests = new Map();
 
@@ -11,7 +17,7 @@ const csvapiRequests = new Map();
  *
  * @param {string} url - a url to a resource hosted on udata
  * @param {import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiRequestConfiguration} config - Csvapi configuration
- * @returns {Promise<import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiResponse>}
+ * @returns {Promise<CsvapiResponseWithEndpoint>}
  */
 export default function requestCsvapi(url, config) {
   let existingRequest;
@@ -23,7 +29,10 @@ export default function requestCsvapi(url, config) {
     if (res.ok) {
       config.dataEndpoint = res.endpoint;
       configure(config);
-      return getData("apify");
+      return {
+        endpoint: res.endpoint,
+        data: getData("apify"),
+      };
     } else {
       throw new Error("Got 200 but result isn't ok");
     }

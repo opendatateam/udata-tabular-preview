@@ -81,17 +81,21 @@ export default function useCsvapi(resource) {
    */
   const sortbyfield = (col) => {
     if(sortBy.value == col) {
-      sortDesc.value = !sortDesc.value
+      sortDesc.value = !sortDesc.value;
     } else {
-      sortDesc.value = false
+      sortDesc.value = false;
     }
     sortBy.value = col;
+    console.log(config.value);
     configure(config.value);
     return sort(sortBy.value, sortDesc.value)
       .then(res => {
         update(res);
         currentPage.value = 1;
-      }).catch(() => hasError.value = true)
+      }).catch((e) => {
+        console.log(e);
+        hasError.value = true;
+      })
       .finally(() => loading.value = false);
   };
 
@@ -109,6 +113,10 @@ export default function useCsvapi(resource) {
    * @returns {Promise<boolean>} The boolean tells if the request get data or not
    */
   const apifyAndGetData = () => requestCsvapi(resource.url, config.value)
+    .then(({endpoint, data}) => {
+      dataEndpoint.value = endpoint;
+      return data;
+    })
     .then(update)
     .catch(onError)
     .finally(() => loading.value = false);
