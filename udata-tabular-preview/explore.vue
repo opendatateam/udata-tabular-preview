@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-my-2w" v-if="hasError">
+  <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-mt-4w fr-mx-4w fr-mb-3v" v-if="hasError">
     <p class="fr-grid-row fr-m-0">
       <span class="fr-icon-warning-line" aria-hidden="true"></span>
       {{ $t("The preview of this file failed to load.") }}

@@ -4,6 +4,11 @@ import { tabular_csvapi_url, tabular_page_size } from "./config";
 import requestCsvapi from "./csvapi";
 
 /**
+ * @typedef {object} GeneralInfos
+ * @property {string} filetype
+ */
+
+/**
  *
  * @param {import("./index").Resource} resource
  */
@@ -18,6 +23,8 @@ export default function useCsvapi(resource) {
   /** @type {import("vue").Ref<number | null>} */
   const columnCount = ref(null);
   const loading = ref(true);
+  /** @type {import("vue").Ref<GeneralInfos | null>} */
+  const generalInfos = ref(null);
   const hasError = ref(false);
   const currentPage = ref(1);
   const rowCount = ref(0);
@@ -51,6 +58,7 @@ export default function useCsvapi(resource) {
         rows.value = res.rows;
         columns.value = res.columns;
         columnsInfos.value = res.columns_infos;
+        generalInfos.value = /** @type {GeneralInfos} */ (res.general_infos);
         rowCount.value = res.total;
         columnCount.value = res.columns.length;
       } else {
@@ -69,7 +77,7 @@ export default function useCsvapi(resource) {
     const res = changePage(page);
     if(res) {
       res.then(update)
-      .catch(() => hasError.value = true)
+      .catch(onError)
       .finally(() => loading.value = false);
     }
     currentPage.value = page;
@@ -86,16 +94,12 @@ export default function useCsvapi(resource) {
       sortDesc.value = false;
     }
     sortBy.value = col;
-    console.log(config.value);
     configure(config.value);
     return sort(sortBy.value, sortDesc.value)
       .then(res => {
         update(res);
         currentPage.value = 1;
-      }).catch((e) => {
-        console.log(e);
-        hasError.value = true;
-      })
+      }).catch(onError)
       .finally(() => loading.value = false);
   };
 
@@ -105,6 +109,19 @@ export default function useCsvapi(resource) {
    * @returns {boolean}
    */
   const isSortedBy = (col) => col === sortBy.value;
+
+
+  /**
+   * Check if the preview is sorted by the provided column
+   * @param {string} col column name
+   * @returns {boolean}
+   */
+  const isExcel = computed(() => {
+    if(!generalInfos.value) {
+      return false;
+    }
+    return generalInfos.value.filetype === "excel";
+  });
 
   /**
    *  Get data from Csvapi.
@@ -119,15 +136,20 @@ export default function useCsvapi(resource) {
     })
     .then(update)
     .catch(onError)
-    .finally(() => loading.value = false);
+    .finally(() => {
+      loading.value = false;
+    });
 
   return {
     apifyAndGetData,
     changePage: changeExplorePage,
     columns,
     columnCount,
+    columnsInfos,
     currentPage,
+    generalInfos,
     hasError,
+    isExcel,
     isSortedBy,
     loading,
     pageSize,
