@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.0.1 (2023-02-06)
 
 - Add sort to exploration preview component [#20](https://github.com/opendatateam/udata-tabular-preview/pull/20)
