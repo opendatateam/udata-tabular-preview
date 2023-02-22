@@ -55,12 +55,7 @@ export default defineComponent({
 
     const hasColumnInfos = computed(() => Object.keys(columnsInfos.value).length > 0);
 
-    apifyAndGetData().then(() => {
-      console.log(columnsInfos.value);
-      console.log(isExcel.value);
-      console.log(hasColumnInfos.value);
-      console.log(Object.keys(columnsInfos.value));
-    });
+    apifyAndGetData();
 
     return {
       columns,
