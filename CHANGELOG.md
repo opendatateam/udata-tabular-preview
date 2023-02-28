@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Update mongoDB in CI [#25](https://github.com/opendatateam/udata-tabular-preview/pull/25)
 
 ## 3.0.1 (2023-02-06)
 
