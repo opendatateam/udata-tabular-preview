@@ -2,6 +2,10 @@
 
 ## Current (in progress)
 
+- Nothing yet
+
+## 3.0.1 (2023-02-06)
+
 - Add sort to exploration preview component [#20](https://github.com/opendatateam/udata-tabular-preview/pull/20)
 - Fix setuptools version used in CI [#23](https://github.com/opendatateam/udata-tabular-preview/pull/23)
 - Add pagination to exploration preview component [#21](https://github.com/opendatateam/udata-tabular-preview/pull/21)
