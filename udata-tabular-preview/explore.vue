@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-my-2w" v-if="hasError">
+  <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-mt-4w fr-mx-4w fr-mb-3v" v-if="hasError">
     <p class="fr-grid-row fr-m-0">
       <span class="fr-icon-warning-line" aria-hidden="true"></span>
       {{ $t("The preview of this file failed to load.") }}
@@ -44,7 +44,7 @@
       :page="currentPage"
       :pageSize="pageSize"
       :totalResults="rowCount"
-      :changePage="changeExplorePage"
+      :changePage="changePage"
     />
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
       <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('{count} rows', rowCount) }}</div>
@@ -58,138 +58,52 @@
 </template>
 
 <script>
-import { apify, changePage, configure, getData, sort } from "@etalab/explore.data.gouv.fr/lib/csvapi";
 import { Pagination } from "@etalab/udata-front-plugins-helper";
-import { computed, defineComponent, ref } from 'vue';
-import { tabular_csvapi_url, tabular_page_size } from "./config";
+import { defineComponent } from 'vue';
 import Loader from "./loader.vue";
+import useCsvapi from "./useCsvapi";
 
 export default defineComponent({
   components: {Loader, Pagination},
   props: {
     resource: {
+      /** @type {import("vue").PropType<import("./index").Resource>} */
       type: Object,
       required: true
     }
   },
   setup(props) {
-    /** @type {import("vue").Ref<Array>} */
-    const columns = ref([]);
-    /** @type {import("vue").Ref<Array>} */
-    const rows = ref([]);
-    const rowCount = ref(0);
-    /** @type {import("vue").Ref<number | null>} */
-    const columnCount = ref(null);
-    const loading = ref(true);
-    const hasError = ref(false);
-    const currentPage = ref(1);
-    /** @type {import("vue").Ref<string | null>} */
-    const dataEndpoint = ref(null);
-    const pageSize = Number.parseInt(tabular_page_size ?? "10");
-    /** @type {import("vue").Ref<string | null>} */
-    const sortBy = ref(null);
-    const sortDesc = ref(false);
-    /** @type {import("vue").ComputedRef<import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiRequestConfiguration>} */
-    const config = computed(() => {
-      return {
-        csvapiUrl: tabular_csvapi_url,
-        dataEndpoint: dataEndpoint.value,
-        filters: [],
-        page: currentPage.value,
-        pageSize: pageSize,
-        sortBy: sortBy.value,
-        sortDesc: sortDesc.value,
-        totalRows: rowCount.value,
-      };
-    });
-
-    /**
-     *
-     * @param {import("@etalab/explore.data.gouv.fr/lib/csvapi").CsvapiResponse} res
-     */
-    const update = (res) => {
-      if (res.ok) {
-          rows.value = res.rows;
-          columns.value = res.columns;
-          rowCount.value = res.total;
-          columnCount.value = res.columns.length;
-        } else {
-          hasError.value = true;
-        }
-    }
-
-    const changeExplorePage = (page) => {
-      configure(config.value);
-      const res = changePage(page);
-      if(res) {
-        res.then(update)
-        .catch(() => hasError.value = true)
-        .finally(() => loading.value = false);
-      }
-      currentPage.value = page;
-    }
-
-    /**
-     *
-     * @param {string} col
-     */
-    const sortbyfield = (col) => {
-      if(sortBy.value == col) {
-        sortDesc.value = !sortDesc.value
-      } else {
-        sortDesc.value = false
-      }
-      sortBy.value = col;
-      configure(config.value);
-      return sort(sortBy.value, sortDesc.value).then(res => {
-        update(res);
-        currentPage.value = 1;
-      }).catch(() => hasError.value = true)
-      .finally(() => loading.value = false);
-    };
-
-    const requestData = () => {
-      loading.value = true;
-      configure(config.value);
-      return getData("apify").then(res => {
-        update(res);
-      }).catch(() => hasError.value = true)
-      .finally(() => loading.value = false);
-    }
-
-    const requestApify = () => {
-      configure(config.value);
-      return apify(props.resource.url).then(res => {
-        if (res.ok) {
-          dataEndpoint.value = res.endpoint;
-          return requestData();
-        } else {
-          hasError.value = true;
-          loading.value = false;
-        }
-      }).catch(() => {
-        hasError.value = true;
-        loading.value = false;
-      });
-    }
-
-    const isSortedBy = (col) => col === sortBy.value;
-
-    requestApify();
-
-    return {
-      hasError,
-      loading,
+    const {
+      apifyAndGetData,
+      changePage,
       columns,
+      columnCount,
+      currentPage,
+      hasError,
+      isSortedBy,
+      loading,
+      pageSize,
       rows,
       rowCount,
-      columnCount,
       sortbyfield,
-      isSortedBy,
       sortDesc,
+   } = useCsvapi(props.resource);
+
+    apifyAndGetData();
+
+    return {
+      changePage,
+      columns,
+      columnCount,
       currentPage,
+      hasError,
+      isSortedBy,
+      loading,
       pageSize,
-      changeExplorePage,
+      rows,
+      rowCount,
+      sortbyfield,
+      sortDesc,
     };
   }
 });
