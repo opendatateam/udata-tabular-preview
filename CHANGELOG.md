@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.0.2 (2023-03-02)
 
 - Add data structure component and explore button for hook `dataset.display.explore-button` [#19](https://github.com/opendatateam/udata-tabular-preview/pull/19)
