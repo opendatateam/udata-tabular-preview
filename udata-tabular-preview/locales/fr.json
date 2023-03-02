@@ -6,7 +6,7 @@
   "{count} rows": "{count} lignes | {count} ligne | {count} lignes",
   "Sort ascending": "Trier par ordre croissant",
   "Sort descending": "Trier par ordre décroissant",
-  "The data structure of this file failed to load.": "",
-  "This is an Excel file, analysis on this type of files are limited.": "",
-  "No data structure found for this file.": ""
+  "The data structure of this file failed to load.": "La structure de données de ce fichier n'a pas pu être chargée.",
+  "This is an Excel file, analysis on this type of files are limited.": "Il s'agit d'un fichier Excel, l'analyse sur ce type de fichiers est limitée.",
+  "No data structure found for this file.": "Aucune structure de données trouvée pour ce fichier."
 }
