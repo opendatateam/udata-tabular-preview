@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Specify version in static [#27](https://github.com/opendatateam/udata-tabular-preview/pull/27)
 
 ## 3.0.2 (2023-03-02)
 
