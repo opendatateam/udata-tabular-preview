@@ -4,6 +4,8 @@ from invoke import task, call
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
+PYTHON_I18N_ROOT = 'udata_tabular_preview/translations'
+
 TO_CLEAN = ['build', 'dist', '**/*.pyc', 'reports']
 
 
@@ -116,11 +118,34 @@ def i18n(ctx, update=False):
     '''Extract translatable strings'''
     header(i18n.__doc__)
 
+    # Python translations
+    info('Extract python translations')
+    with ctx.cd(ROOT):
+        ctx.run('python setup.py extract_messages')
+        set_po_metadata(os.path.join(PYTHON_I18N_ROOT, 'gouvfr.pot'), 'en')
+        for lang in LANGUAGES:
+            pofile = os.path.join(PYTHON_I18N_ROOT, lang, 'LC_MESSAGES', 'gouvfr.po')
+            if not os.path.exists(pofile):
+                ctx.run('python setup.py init_catalog -l {}'.format(lang))
+                set_po_metadata(pofile, lang)
+            elif update:
+                ctx.run('python setup.py update_catalog -l {}'.format(lang))
+                set_po_metadata(pofile, lang)
+
+
     # Front translations
     info('Extract vue translations')
     with ctx.cd(ROOT):
         ctx.run('npm run i18n:extract')
     success('Updated translations')
+
+
+@task
+def i18nc(ctx):
+    '''Compile translations'''
+    header('Compiling translations')
+    with ctx.cd(ROOT):
+        ctx.run('python setup.py compile_catalog')
 
 
 @task(assets_build)
