@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Add python translations logic [#26](https://github.com/opendatateam/udata-tabular-preview/pull/26)
 
 ## 3.0.2 (2023-03-02)
 
