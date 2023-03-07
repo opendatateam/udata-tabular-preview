@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.0.3 (2023-03-07)
 
 - Specify version in static [#27](https://github.com/opendatateam/udata-tabular-preview/pull/27)
