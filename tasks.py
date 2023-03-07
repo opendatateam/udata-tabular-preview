@@ -1,10 +1,17 @@
 import os
 
+from datetime import datetime
+
+from babel.messages.pofile import read_po, write_po
+from babel.util import LOCALTZ
+
 from invoke import task, call
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 PYTHON_I18N_ROOT = 'udata_tabular_preview/translations'
+
+LANGUAGES = ['fr']
 
 TO_CLEAN = ['build', 'dist', '**/*.pyc', 'reports']
 
@@ -113,6 +120,20 @@ def assets_build(ctx):
         ctx.run('npm run build', pty=True)
 
 
+def set_po_metadata(filename, locale):
+    # Fix crowdin requiring Language with `2-digit` iso code in potfile
+    # to produce 2-digit iso code pofile
+    # Opening the catalog also allows to set extra metadata
+    with open(filename, 'rb') as infile:
+        catalog = read_po(infile, locale)
+    catalog.copyright_holder = 'Etalab'
+    catalog.msgid_bugs_address = 'data.gouv@data.gouv.fr'
+    catalog.language_team = 'Data.gouv.fr Team <data.gouv@data.gouv.fr>'
+    catalog.last_translator = 'Data.gouv.fr Team <data.gouv@data.gouv.fr>'
+    catalog.revision_date = datetime.now(LOCALTZ)
+    with open(filename, 'wb') as outfile:
+        write_po(outfile, catalog, width=80)
+
 @task
 def i18n(ctx, update=False):
     '''Extract translatable strings'''
@@ -122,9 +143,9 @@ def i18n(ctx, update=False):
     info('Extract python translations')
     with ctx.cd(ROOT):
         ctx.run('python setup.py extract_messages')
-        set_po_metadata(os.path.join(PYTHON_I18N_ROOT, 'gouvfr.pot'), 'en')
+        set_po_metadata(os.path.join(PYTHON_I18N_ROOT, 'udata_tabular_preview.pot'), 'en')
         for lang in LANGUAGES:
-            pofile = os.path.join(PYTHON_I18N_ROOT, lang, 'LC_MESSAGES', 'gouvfr.po')
+            pofile = os.path.join(PYTHON_I18N_ROOT, lang, 'LC_MESSAGES', 'udata_tabular_preview.po')
             if not os.path.exists(pofile):
                 ctx.run('python setup.py init_catalog -l {}'.format(lang))
                 set_po_metadata(pofile, lang)
