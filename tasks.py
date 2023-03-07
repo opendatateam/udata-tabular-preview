@@ -169,7 +169,7 @@ def i18nc(ctx):
         ctx.run('python setup.py compile_catalog')
 
 
-@task(assets_build)
+@task(i18nc, assets_build)
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header('Building a distribuable package')
@@ -181,7 +181,7 @@ def dist(ctx, buildno=None):
         ctx.run(' '.join(cmd), pty=True)
     success('Distribution is available in dist directory')
 
-@task
+@task(i18nc)
 def pydist(ctx, buildno=None):
     '''Perform python packaging (without compiling assets)'''
     header('Building a distribuable package')
