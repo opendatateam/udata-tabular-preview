@@ -113,7 +113,7 @@ def test_display_preview_using_check_extras():
 def test_display_preview_using_analysis_extras():
     extras = {
         'analysis:mime-type': MIME_TYPE,
-        'analysis:filesize': MAX_SIZE - 1,
+        'analysis:content-length': MAX_SIZE - 1,
     }
     resource = ResourceFactory(
         mime=None,
