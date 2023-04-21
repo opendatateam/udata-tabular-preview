@@ -29,7 +29,7 @@ class TabularPreview(PreviewPlugin):
         is_allowed = allow_remote or not is_remote
 
         max_size = current_app.config.get('TABULAR_MAX_SIZE')
-        extras_size = resource.extras.get('analysis:filesize') \
+        extras_size = resource.extras.get('analysis:content-length') \
             or resource.extras.get('check:headers:content-length')
         size_ok = (
             not max_size
