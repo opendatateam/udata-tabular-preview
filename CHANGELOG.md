@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use analysis extras on top of check:headers [#30](https://github.com/opendatateam/udata-tabular-preview/pull/30)
 
 ## 3.0.3 (2023-03-07)
 

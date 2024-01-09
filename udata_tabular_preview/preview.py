@@ -17,7 +17,8 @@ class TabularPreview(PreviewPlugin):
         )
 
         supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
-        extras_mime = resource.extras.get('check:headers:content-type')
+        extras_mime = resource.extras.get('analysis:mime-type') \
+            or resource.extras.get('check:headers:content-type')
         is_supported = (
             extras_mime in supported_mimes
             or resource.mime in supported_mimes
@@ -28,7 +29,8 @@ class TabularPreview(PreviewPlugin):
         is_allowed = allow_remote or not is_remote
 
         max_size = current_app.config.get('TABULAR_MAX_SIZE')
-        extras_size = resource.extras.get('check:headers:content-length')
+        extras_size = resource.extras.get('analysis:content-length') \
+            or resource.extras.get('check:headers:content-length')
         size_ok = (
             not max_size
             or (extras_size or resource.filesize or float("inf")) <= max_size
