@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 3.0.4 (2024-01-09)
 
 - Update mongoDB in CI [#25](https://github.com/opendatateam/udata-tabular-preview/pull/25)
