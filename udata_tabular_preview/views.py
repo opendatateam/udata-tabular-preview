@@ -1,8 +1,11 @@
+from time import time
+
 from flask import current_app, render_template, Blueprint
 
 from udata import assets
 from udata.frontend import template_hook
 
+from udata_tabular_preview import __version__
 from udata_tabular_preview.explore import can_explore
 
 from . import settings as DEFAULTS
@@ -54,5 +57,11 @@ def tabular_static(ui, filename):
     '''
     Get an UI asset path
     '''
-    static_root = assets.cdn_for('tabular.static', filename=ui, _external=True)
-    return f"{static_root}/{filename}"
+    url = assets.cdn_for('tabular.static', filename=ui + '/' + filename, _external=True)
+    if url.endswith('/'):  # this is a directory, no need for cache burst
+        return url
+    if current_app.config['DEBUG']:
+        burst = time()
+    else:
+        burst = __version__
+    return f"{url}?_={burst}"

@@ -28,7 +28,7 @@ jobs:
           command: |
             virtualenv venv
             source venv/bin/activate
-            pip install setuptools==66.1.1
+            pip install --force-reinstall setuptools==66.1.1
             pip install -e . || pip install -e .
             pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
       - save_cache:

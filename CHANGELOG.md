@@ -3,13 +3,22 @@
 ## Current (in progress)
 
 - Update mongoDB in CI [#25](https://github.com/opendatateam/udata-tabular-preview/pull/25)
+- Use analysis extras on top of check:headers [#30](https://github.com/opendatateam/udata-tabular-preview/pull/30)
+
+## 3.0.3 (2023-03-07)
+
+- Specify version in static [#27](https://github.com/opendatateam/udata-tabular-preview/pull/27)
+- Add python translations logic [#26](https://github.com/opendatateam/udata-tabular-preview/pull/26)
+
+## 3.0.2 (2023-03-02)
+
+- Add data structure component and explore button for hook `dataset.display.explore-button` [#19](https://github.com/opendatateam/udata-tabular-preview/pull/19)
 
 ## 3.0.1 (2023-02-06)
 
 - Add sort to exploration preview component [#20](https://github.com/opendatateam/udata-tabular-preview/pull/20)
 - Fix setuptools version used in CI [#23](https://github.com/opendatateam/udata-tabular-preview/pull/23)
 - Add pagination to exploration preview component [#21](https://github.com/opendatateam/udata-tabular-preview/pull/21)
-- Add data structure component and explore button for hook `dataset.display.explore-button` [#19](https://github.com/opendatateam/udata-tabular-preview/pull/19)
 
 ## 3.0.0 (2023-01-18)
 
