@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 3.0.4 (2024-01-09)
 
 - Update mongoDB in CI [#25](https://github.com/opendatateam/udata-tabular-preview/pull/25)
 - Use analysis extras on top of check:headers [#30](https://github.com/opendatateam/udata-tabular-preview/pull/30)
