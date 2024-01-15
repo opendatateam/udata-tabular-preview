@@ -127,6 +127,23 @@ def test_display_preview_using_analysis_extras():
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_CSVAPI_URL='http://csvapi.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
+def test_display_preview_using_check_and_analysis_extras():
+    extras = {
+        'check:headers:content-type': MIME_TYPE,
+        'analysis:mime-type': 'incorrect/mime',
+        'analysis:content-length': MAX_SIZE - 1,
+    }
+    resource = ResourceFactory(
+        mime=None,
+        filesize=None,
+        extras=extras
+    )
+
+    assert resource.preview_url == expected_url(resource.latest)
+
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
+                     TABULAR_CSVAPI_URL='http://csvapi.me/',
+                     TABULAR_MAX_SIZE=MAX_SIZE)
 def test_no_preview_for_resource_over_max_size():
     resource = ResourceFactory(mime=MIME_TYPE, filesize=MAX_SIZE + 1)
 
