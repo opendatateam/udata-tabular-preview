@@ -17,10 +17,11 @@ class TabularPreview(PreviewPlugin):
         )
 
         supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
-        extras_mime = resource.extras.get('analysis:mime-type') \
-            or resource.extras.get('check:headers:content-type')
+        extras_analysis_mime = resource.extras.get('analysis:mime-type')
+        extras_headers_mime = resource.extras.get('check:headers:content-type')
         is_supported = (
-            extras_mime in supported_mimes
+            extras_analysis_mime in supported_mimes
+            or extras_headers_mime in supported_mimes
             or resource.mime in supported_mimes
         )
 
