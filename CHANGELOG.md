@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Use either of analysis or header check mime [#32](https://github.com/opendatateam/udata-tabular-preview/pull/32)
 
 ## 3.0.4 (2024-01-09)
 
