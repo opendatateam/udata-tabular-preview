@@ -3,8 +3,8 @@ import pytest
 from udata.core.dataset.factories import ResourceFactory
 
 
-MIME_TYPE = 'text/csv'
 DUMMY_MIMES = ['text/csv', 'text/toto']
+DUMMY_EXTRAS = [{ 'analysis:mime-type': 'text/csv' }, { 'check:headers:content-type': 'text/toto' }]
 MAX_SIZE = 50000
 
 pytestmark = [
@@ -17,18 +17,18 @@ def expected_url(rid):
     return 'http://preview.me/resources/{0}'.format(rid)
 
 
-@pytest.mark.parametrize('mime', DUMMY_MIMES)
+@pytest.mark.parametrize('extras', DUMMY_EXTRAS)
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
 @pytest.mark.options(TABULAR_API_URL='http://tabular-api.me/')
 @pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=DUMMY_MIMES)
-def test_display_preview_for_tabular_resources(mime):
-    resource = ResourceFactory(mime=mime)
+def test_display_preview_for_tabular_resources(extras):
+    resource = ResourceFactory(extras=extras)
     assert resource.preview_url == expected_url(resource.id)
 
 
 @pytest.mark.options(TABULAR_EXPLORE_URL=None, TABULAR_API_URL=None)
 def test_no_preview_if_no_conf():
-    assert ResourceFactory(mime=MIME_TYPE).preview_url is None
+    assert ResourceFactory(extras=DUMMY_EXTRAS[0]).preview_url is None
 
 
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
@@ -41,8 +41,8 @@ def test_no_preview_if_for_unknown_types():
                      TABULAR_API_URL='http://tabular-api.me/')
 def test_default_allow_remote_preview():
     resources = [
-        ResourceFactory(mime=MIME_TYPE),
-        ResourceFactory(filetype='remote', mime=MIME_TYPE),
+        ResourceFactory(extras=DUMMY_EXTRAS[0]),
+        ResourceFactory(filetype='remote', extras=DUMMY_EXTRAS[0]),
     ]
 
     for resource in resources:
@@ -53,8 +53,8 @@ def test_default_allow_remote_preview():
                      TABULAR_API_URL='http://tabular-api.me/',
                      TABULAR_ALLOW_REMOTE=False)
 def test_allow_remote_preview_false():
-    local = ResourceFactory(mime=MIME_TYPE)
-    remote = ResourceFactory(filetype='remote', mime=MIME_TYPE)
+    local = ResourceFactory(extras=DUMMY_EXTRAS[0])
+    remote = ResourceFactory(filetype='remote', extras=DUMMY_EXTRAS[0])
 
     assert local.preview_url == expected_url(local.id)
     assert remote.preview_url is None
@@ -63,7 +63,7 @@ def test_allow_remote_preview_false():
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
                      TABULAR_API_URL='http://tabular-api.me/')
 def test_display_preview_without_max_size():
-    resource = ResourceFactory(mime=MIME_TYPE, filesize=2 * MAX_SIZE)
+    resource = ResourceFactory(extras=DUMMY_EXTRAS[0], filesize=2 * MAX_SIZE)
 
     assert resource.preview_url == expected_url(resource.id)
 
@@ -72,7 +72,7 @@ def test_display_preview_without_max_size():
                      TABULAR_API_URL='http://tabular-api.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_without_resource_size():
-    resource = ResourceFactory(mime=MIME_TYPE, filesize=None)
+    resource = ResourceFactory(extras=DUMMY_EXTRAS[0], filesize=None)
 
     assert resource.preview_url is None
 
@@ -82,7 +82,7 @@ def test_display_preview_without_resource_size():
                      TABULAR_API_URL='http://tabular-api.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_with_max_size(size):
-    resource = ResourceFactory(mime=MIME_TYPE, filesize=size)
+    resource = ResourceFactory(extras=DUMMY_EXTRAS[0], filesize=size)
 
     assert resource.preview_url == expected_url(resource.id)
 
@@ -92,7 +92,7 @@ def test_display_preview_with_max_size(size):
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_using_check_extras():
     extras = {
-        'check:headers:content-type': MIME_TYPE,
+        'check:headers:content-type': DUMMY_MIMES[0],
         'check:headers:content-length': MAX_SIZE - 1,
     }
     resource = ResourceFactory(
@@ -109,7 +109,7 @@ def test_display_preview_using_check_extras():
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_using_analysis_extras():
     extras = {
-        'analysis:mime-type': MIME_TYPE,
+        'analysis:mime-type': DUMMY_MIMES[0],
         'analysis:content-length': MAX_SIZE - 1,
     }
     resource = ResourceFactory(
@@ -126,7 +126,7 @@ def test_display_preview_using_analysis_extras():
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_display_preview_using_check_and_analysis_extras():
     extras = {
-        'check:headers:content-type': MIME_TYPE,
+        'check:headers:content-type': DUMMY_MIMES[0],
         'analysis:mime-type': 'incorrect/mime',
         'analysis:content-length': MAX_SIZE - 1,
     }
@@ -142,6 +142,6 @@ def test_display_preview_using_check_and_analysis_extras():
                      TABULAR_API_URL='http://tabular-api.me/',
                      TABULAR_MAX_SIZE=MAX_SIZE)
 def test_no_preview_for_resource_over_max_size():
-    resource = ResourceFactory(mime=MIME_TYPE, filesize=MAX_SIZE + 1)
+    resource = ResourceFactory(extras=DUMMY_EXTRAS[0], filesize=MAX_SIZE + 1)
 
     assert resource.preview_url is None
