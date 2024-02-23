@@ -22,7 +22,6 @@ class TabularPreview(PreviewPlugin):
         is_supported = (
             extras_analysis_mime in supported_mimes
             or extras_headers_mime in supported_mimes
-            or resource.mime in supported_mimes
         )
 
         is_remote = resource.filetype == 'remote'
