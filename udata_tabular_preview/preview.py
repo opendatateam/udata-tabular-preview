@@ -12,7 +12,7 @@ class TabularPreview(PreviewPlugin):
 
     def can_preview(self, resource):
         has_config = (
-                        bool(current_app.config.get('TABULAR_CSVAPI_URL'))
+                        bool(current_app.config.get('TABULAR_API_URL'))
                         and bool(self.preview_base_url)
         )
 
@@ -36,8 +36,7 @@ class TabularPreview(PreviewPlugin):
             not max_size
             or (extras_size or resource.filesize or float("inf")) <= max_size
         )
-
         return all((has_config, is_supported, is_allowed, size_ok))
 
     def preview_url(self, resource):
-        return f'{self.preview_base_url}/?url={quote_plus(resource.latest)}'
+        return f'{self.preview_base_url}/resources/{resource.id}'

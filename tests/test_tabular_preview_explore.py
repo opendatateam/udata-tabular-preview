@@ -16,7 +16,7 @@ pytestmark = [
 
 @pytest.mark.parametrize('mime', DUMMY_MIMES)
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
-@pytest.mark.options(TABULAR_CSVAPI_URL='http://csvapi.me/')
+@pytest.mark.options(TABULAR_API_URL='http://tabular-api.me/')
 @pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=DUMMY_MIMES)
 def test_can_explore(mime):
     resource = ResourceFactory(mime=mime)
@@ -24,7 +24,7 @@ def test_can_explore(mime):
 
 @pytest.mark.parametrize('mime', DUMMY_MIMES)
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
-@pytest.mark.options(TABULAR_CSVAPI_URL='http://csvapi.me/')
+@pytest.mark.options(TABULAR_API_URL='http://tabular-api.me/')
 @pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=[])
 def test_cant_explore(mime):
     resource = ResourceFactory(mime=mime)

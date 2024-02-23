@@ -1,8 +1,8 @@
 '''
 Default settings for udata-tabular-preview
 '''
-# csvapi instance URL
-TABULAR_CSVAPI_URL = None
+# tabular-api instance URL
+TABULAR_API_URL = None
 
 # explore instance URL
 TABULAR_EXPLORE_URL = None
