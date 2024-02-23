@@ -27,7 +27,8 @@ export function fetchData(url) {
  * @returns {object} api result
  */
 export function getData(id, page, sortConfig) {
-  let url = `${tabular_api_url}/api/resources/${id}/data/?page=${page}&page_size=${tabular_page_size}`; // Construit l'URL avec l'ID
+  //let url = `${tabular_api_url}/api/resources/${id}/data/?page=${page}&page_size=${tabular_page_size}`; // Construit l'URL avec l'ID
+  let url = `${tabular_api_url}/api/resources/91084b11-1316-422e-bccf-b86234cd3fd9/data/?page=${page}&page_size=${tabular_page_size}`; // Construit l'URL avec l'ID
   
   if (sortConfig) {
     url = url + `&${sortConfig.column}__sort=${sortConfig.type}`
@@ -41,6 +42,7 @@ export function getData(id, page, sortConfig) {
  * @returns {object} api result
  */
 export function getProfile(id) {
-  let url = `${tabular_api_url}/api/resources/${id}/profile/`; // Construit l'URL avec l'ID
+  //let url = `${tabular_api_url}/api/resources/${id}/profile/`; // Construit l'URL avec l'ID
+  let url = `${tabular_api_url}/api/resources/91084b11-1316-422e-bccf-b86234cd3fd9/profile/`; // Construit l'URL avec l'ID
   return fetchData(url)
 }

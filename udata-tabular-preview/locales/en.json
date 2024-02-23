@@ -1,11 +1,13 @@
 {
   "Preview of {name}": "Preview of {name}",
   "{count} columns": "{count} columns | {count} column | {count} columns",
-  "Explore data": "Explore data",
+  "Explore data": "Explore",
   "The preview of this file failed to load.": "The preview of this file failed to load.",
   "{count} rows": "{count} rows | {count} row | {count} rows",
   "Sort ascending": "Sort ascending",
   "Sort descending": "Sort descending",
   "The data structure of this file failed to load.": "The data structure of this file failed to load.",
-  "No data structure found for this file.": "No data structure found for this file."
+  "No data structure found for this file.": "No data structure found for this file.",
+  "Explore data in detail": "Explore data in detail",
+  "Use our tool": "Use our tool to get an overview of data learn about different columns or perform filters and sorts."
 }
