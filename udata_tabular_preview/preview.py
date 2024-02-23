@@ -1,6 +1,5 @@
 from flask import current_app
 from udata.core.dataset.preview import PreviewPlugin
-from urllib.parse import quote_plus
 
 
 class TabularPreview(PreviewPlugin):

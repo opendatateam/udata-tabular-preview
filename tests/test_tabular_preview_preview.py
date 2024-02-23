@@ -1,7 +1,5 @@
 import pytest
 
-from urllib.parse import quote_plus
-
 from udata.core.dataset.factories import ResourceFactory
 
 
