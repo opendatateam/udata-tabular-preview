@@ -1,6 +1,6 @@
 # Tabular Preview
 
-A plugin to preview tabular files (CSV, Excel, ...) using [tabular-api](https://github.com/etalab/api-tabular)
+A plugin to preview tabular CSV files using [tabular-api](https://github.com/etalab/api-tabular)
 
 ## Usage
 

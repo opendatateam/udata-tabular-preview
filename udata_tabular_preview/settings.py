@@ -18,7 +18,5 @@ TABULAR_PAGE_SIZE = 5
 
 # Supported mimes
 TABULAR_SUPPORTED_MIME_TYPES = (
-    'text/csv',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'text/csv', "text/plain", "text/csv"
 )
