@@ -44,7 +44,7 @@
       :page="currentPage"
       :pageSize="pageSize"
       :totalResults="rowCount"
-      :changePage="changePage"
+      @change="changePage"
     />
     <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
       <div class="fr-col">{{ $t('{count} columns', columnCount) }} — {{ $t('{count} rows', rowCount) }}</div>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { Pagination } from "@etalab/udata-front-plugins-helper";
+import { Pagination } from "@etalab/data.gouv.fr-components";
 import { defineComponent } from 'vue';
 import Loader from "./loader.vue";
 import useCsvapi from "./useCsvapi";
