@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Use pagination from package `@etalab/data.gouv.fr-components` [#34](https://github.com/opendatateam/udata-tabular-preview/pull/34)
+
 ## 3.1.0 (2024-01-23)
 
 - Use either of analysis or header check mime [#32](https://github.com/opendatateam/udata-tabular-preview/pull/32)
