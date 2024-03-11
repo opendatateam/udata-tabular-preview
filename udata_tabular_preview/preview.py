@@ -11,8 +11,8 @@ class TabularPreview(PreviewPlugin):
 
     def can_preview(self, resource):
         has_config = (
-                        bool(current_app.config.get('TABULAR_API_URL'))
-                        and bool(self.preview_base_url)
+                            bool(current_app.config.get('TABULAR_API_URL'))
+                            and bool(self.preview_base_url)
         )
 
         supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')

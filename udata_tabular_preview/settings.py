@@ -18,5 +18,5 @@ TABULAR_PAGE_SIZE = 5
 
 # Supported mimes
 TABULAR_SUPPORTED_MIME_TYPES = (
-    'text/csv', "text/plain", "text/csv"
+    'text/csv', "text/plain"
 )

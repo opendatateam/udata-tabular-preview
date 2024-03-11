@@ -22,7 +22,7 @@ export function fetchData(url) {
 /**
  * Call Tabular-api to get table content
  * @param {string} id resource id
- * @param {string} page page
+ * @param {number} page page
  * @param {object} sortConfig sort config 
  * @returns {object} api result
  */
