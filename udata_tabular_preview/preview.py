@@ -15,7 +15,6 @@ class TabularPreview(PreviewPlugin):
             and bool(self.preview_base_url)
         )
 
-        supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
         is_hydra_table = resource.extras.get('analysis:parsing:finished_at') is not None
 
         is_remote = resource.filetype == 'remote'
