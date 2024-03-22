@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0 (2024-03-22)
+
+- Connect preview with hydra and remove csvapi + styles for preview [#32](https://github.com/opendatateam/udata-tabular-preview/pull/33)
+
 ## 3.1.0 (2024-01-23)
 
 - Use either of analysis or header check mime [#32](https://github.com/opendatateam/udata-tabular-preview/pull/32)
