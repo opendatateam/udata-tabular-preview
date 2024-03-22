@@ -15,8 +15,3 @@ TABULAR_MAX_SIZE = None
 
 # Default page size
 TABULAR_PAGE_SIZE = 5
-
-# Supported mimes
-TABULAR_SUPPORTED_MIME_TYPES = (
-    'text/csv', "text/plain"
-)

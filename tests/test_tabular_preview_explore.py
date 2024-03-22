@@ -24,7 +24,6 @@ def test_can_explore(extras):
 @pytest.mark.parametrize('extras', DUMMY_EXTRAS_BAD)
 @pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me')
 @pytest.mark.options(TABULAR_API_URL='http://tabular-api.me/')
-@pytest.mark.options(TABULAR_SUPPORTED_MIME_TYPES=[])
 def test_cant_explore(extras):
     resource = ResourceFactory(extras=extras)
     assert not can_explore(resource)
