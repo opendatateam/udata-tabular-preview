@@ -57,7 +57,7 @@
           :page="currentPage"
           :pageSize="pageSize"
           :totalResults="rowCount"
-          :changePage="changePage"
+          @change="changePage"
         />
         <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-px-5v">
           <div class="fr-col">{{ $t('{count} columns', columns.length) }} — {{ $t('{count} rows', rowCount) }}</div>
@@ -67,10 +67,10 @@
 </template>
 
 <script>
+import { Pagination } from "@etalab/data.gouv.fr-components";
 import { defineComponent } from 'vue';
 import getDataTabularApi from "./useTabularapiData.js";
 import Loader from "./loader.vue";
-import { Pagination } from "@etalab/udata-front-plugins-helper";
 import franceSvg from "./france.svg?raw";
 
 export default defineComponent({
@@ -149,7 +149,7 @@ th{
 
 
 @media (min-width: 48rem){
-    
+
   .banner-explore{
     min-height: 7rem;
     background-color: #E6EEFE;
