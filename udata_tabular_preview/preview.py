@@ -1,6 +1,5 @@
 from flask import current_app
 from udata.core.dataset.preview import PreviewPlugin
-from urllib.parse import quote_plus
 
 
 class TabularPreview(PreviewPlugin):
@@ -12,32 +11,17 @@ class TabularPreview(PreviewPlugin):
 
     def can_preview(self, resource):
         has_config = (
-                        bool(current_app.config.get('TABULAR_CSVAPI_URL'))
-                        and bool(self.preview_base_url)
+            bool(current_app.config.get('TABULAR_API_URL'))
+            and bool(self.preview_base_url)
         )
 
-        supported_mimes = current_app.config.get('TABULAR_SUPPORTED_MIME_TYPES')
-        extras_analysis_mime = resource.extras.get('analysis:mime-type')
-        extras_headers_mime = resource.extras.get('check:headers:content-type')
-        is_supported = (
-            extras_analysis_mime in supported_mimes
-            or extras_headers_mime in supported_mimes
-            or resource.mime in supported_mimes
-        )
+        is_hydra_table = resource.extras.get('analysis:parsing:finished_at') is not None
 
         is_remote = resource.filetype == 'remote'
         allow_remote = current_app.config.get('TABULAR_ALLOW_REMOTE')
         is_allowed = allow_remote or not is_remote
 
-        max_size = current_app.config.get('TABULAR_MAX_SIZE')
-        extras_size = resource.extras.get('analysis:content-length') \
-            or resource.extras.get('check:headers:content-length')
-        size_ok = (
-            not max_size
-            or (extras_size or resource.filesize or float("inf")) <= max_size
-        )
-
-        return all((has_config, is_supported, is_allowed, size_ok))
+        return all((has_config, is_hydra_table, is_allowed))
 
     def preview_url(self, resource):
-        return f'{self.preview_base_url}/?url={quote_plus(resource.latest)}'
+        return f'{self.preview_base_url}/resources/{resource.id}'

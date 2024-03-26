@@ -37,6 +37,11 @@ def load_explore_script(ctx):
     return render_template('script.html')
 
 
+@template_hook('header.snippets', when=can_explore_dataset)
+def load_explore_style(ctx):
+    return render_template('styles.html')
+
+
 @template_hook('dataset.display.explore-button', when=can_explore_dataset)
 def load_explore_button(ctx):
     dataset = ctx.get('dataset', None)

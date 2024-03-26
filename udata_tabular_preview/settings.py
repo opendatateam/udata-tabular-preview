@@ -1,8 +1,8 @@
 '''
 Default settings for udata-tabular-preview
 '''
-# csvapi instance URL
-TABULAR_CSVAPI_URL = None
+# tabular-api instance URL
+TABULAR_API_URL = None
 
 # explore instance URL
 TABULAR_EXPLORE_URL = None
@@ -15,10 +15,3 @@ TABULAR_MAX_SIZE = None
 
 # Default page size
 TABULAR_PAGE_SIZE = 5
-
-# Supported mimes
-TABULAR_SUPPORTED_MIME_TYPES = (
-    'text/csv',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-)
