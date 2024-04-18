@@ -7,13 +7,7 @@
   </div>
   <Loader v-if="loading" />
   <div v-if="!hasError && !loading" class="fr-grid-row fr-grid-row--gutters">
-    <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-mb-2w" v-if="isExcel">
-      <p class="fr-grid-row fr-m-0">
-        <span class="fr-icon-warning-line" aria-hidden="true"></span>
-        {{ $t("This is an Excel file, analysis on this type of files are limited.") }}
-      </p>
-    </div>
-    <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-mb-2w" v-else-if="!hasColumnInfos">
+    <div class="bg-alt-green-tilleul-verveine fr-p-3v fr-mb-2w" v-if="!hasColumnInfos">
       <p class="fr-grid-row fr-m-0">
         <span class="fr-icon-warning-line" aria-hidden="true"></span>
         {{ $t("No data structure found for this file.") }}
@@ -31,7 +25,8 @@
 <script>
 import { computed, defineComponent } from 'vue';
 import Loader from "./loader.vue";
-import useCsvapi from './useCsvapi';
+import getProfileTabularApi from "./useTabularapiProfile.js";
+
 
 export default defineComponent({
   components: {Loader},
@@ -44,27 +39,22 @@ export default defineComponent({
   },
   setup(props) {
     const {
-      apifyAndGetData,
+      loading,
+      hasError,
+      hasColumnInfos,
       columns,
       columnsInfos,
-      generalInfos,
-      hasError,
-      isExcel,
-      loading,
-    } = useCsvapi(props.resource);
+      getProfileInfos,
+    } = getProfileTabularApi(props.resource);
 
-    const hasColumnInfos = computed(() => Object.keys(columnsInfos.value).length > 0);
-
-    apifyAndGetData();
+    getProfileInfos();
 
     return {
+      loading,
+      hasError,
+      hasColumnInfos,
       columns,
       columnsInfos,
-      generalInfos,
-      hasColumnInfos,
-      hasError,
-      isExcel,
-      loading,
     };
   }
 });
