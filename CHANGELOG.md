@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- **breaking change** Migrate to Python 3.11 following `udata` dependencies upgrade [#35](https://github.com/opendatateam/udata-tabular-preview/pull/35)
+- Migrate to Python 3.11 following `udata` dependencies upgrade [#35](https://github.com/opendatateam/udata-tabular-preview/pull/35)
 
 ## 4.0.0 (2024-03-22)
 
