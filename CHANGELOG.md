@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Migrate to Python 3.11 following `udata` dependencies upgrade [#35](https://github.com/opendatateam/udata-tabular-preview/pull/35)
+
 ## 4.0.0 (2024-03-22)
 
 - Connect preview with hydra and remove csvapi + styles for preview [#32](https://github.com/opendatateam/udata-tabular-preview/pull/33)
