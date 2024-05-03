@@ -57,3 +57,15 @@ def test_display_preview_without_max_size():
     resource = ResourceFactory(extras=DUMMY_EXTRAS, filesize=2 * MAX_SIZE)
 
     assert resource.preview_url == expected_url(resource.id)
+
+
+@pytest.mark.options(TABULAR_EXPLORE_URL='http://preview.me',
+                     TABULAR_API_URL='http://tabular-api.me/')
+def test_no_preview_if_parsing_failed():
+    extras = {
+        **DUMMY_EXTRAS,
+        "analysis:parsing:error": "csv_detective:sentry:xxx"
+    }
+    resource = ResourceFactory(extras=extras, filesize=2 * MAX_SIZE)
+
+    assert resource.preview_url is None

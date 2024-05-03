@@ -15,8 +15,10 @@ class TabularPreview(PreviewPlugin):
             and bool(self.preview_base_url)
         )
 
-        is_hydra_table = resource.extras.get('analysis:parsing:finished_at') is not None
-
+        is_hydra_table = (
+            resource.extras.get('analysis:parsing:finished_at') is not None
+            and resource.extras.get('analysis:parsing:error') is None
+        )
         is_remote = resource.filetype == 'remote'
         allow_remote = current_app.config.get('TABULAR_ALLOW_REMOTE')
         is_allowed = allow_remote or not is_remote
