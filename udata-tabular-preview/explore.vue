@@ -192,6 +192,7 @@ th{
   }
   .subsubtitle-text-explore{
     font-size: 14px;
+    line-height: 1.75rem;
     color: #3558A2;
   }
 
