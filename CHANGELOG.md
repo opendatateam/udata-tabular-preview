@@ -4,6 +4,7 @@
 
 - Migrate to Python 3.11 following `udata` dependencies upgrade [#35](https://github.com/opendatateam/udata-tabular-preview/pull/35)
 - Don't show preview if parsing has failed [#36](https://github.com/opendatateam/udata-tabular-preview/pull/36)
+- Display the latest date of the preview [#37](https://github.com/opendatateam/udata-tabular-preview/pull/37)
 
 ## 4.0.0 (2024-03-22)
 
