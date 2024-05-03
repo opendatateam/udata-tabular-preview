@@ -9,5 +9,6 @@
   "The data structure of this file failed to load.": "The data structure of this file failed to load.",
   "No data structure found for this file.": "No data structure found for this file.",
   "Explore data in detail": "Explore data in detail",
-  "Use our tool": "Use our tool to get an overview of data learn about different columns or perform filters and sorts."
+  "Use our tool": "Use our tool to get an overview of data learn about different columns or perform filters and sorts.",
+  "Preview updated: {date}": "Preview updated: {date}"
 }
