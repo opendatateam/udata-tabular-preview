@@ -14,6 +14,7 @@
           <div class="text-explore">
             <div class="title-text-explore">{{ $t("Explore data in detail") }}</div>
             <div class="subtitle-text-explore">{{ $t("Use our tool") }}</div>
+            <div class="subsubtitle-text-explore">{{ $t("Preview updated: {date}", {date: lastUpdate}) }}</div>
           </div>
           <div class="button-explore">
             <a :href="resource.preview_url" class="fr-btn fr-btn--icon-right fr-icon-external-link-fill">
@@ -98,6 +99,11 @@ export default defineComponent({
       getTableInfos,
     } = getDataTabularApi(props.resource)
 
+    // todo : use formatDate with locale support from datagouv components instead
+    const parsingDate = new Date(props.resource.extras['analysis:parsing:finished_at']);
+    const dateFormatter = new Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    const lastUpdate = dateFormatter.format(parsingDate)
+
     getTableInfos(currentPage.value);
 
     return {
@@ -113,6 +119,7 @@ export default defineComponent({
       sortByField,
       changePage,
       franceSvg,
+      lastUpdate,
     };
   }
 });
@@ -181,6 +188,10 @@ th{
     font-size: 0.875rem;
     line-height: 1.125rem;
     font-style: italic;
+    color: #3558A2;
+  }
+  .subsubtitle-text-explore{
+    font-size: 14px;
     color: #3558A2;
   }
 
