@@ -2,7 +2,7 @@
 
 ## Current (in progress)
 
-- Nothing yet
+- Remove useless max size setting [#41](https://github.com/opendatateam/udata-tabular-preview/pull/41)
 
 ## 4.0.0 (2024-05-06)
 

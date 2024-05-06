@@ -23,7 +23,6 @@ You can control this plugin behavior with the following `udata.cfg` parameters:
 - **`TABULAR_API_URL`**: The URL to your `tabular-api` instance (without trailing slash). **ex:** `https://my.tabular.api`
 - **`TABULAR_EXPLORE_URL`**: The URL to your `explore` instance (without trailing slash). **ex:** `https://my.explore`
 - **`TABULAR_ALLOW_REMOTE`**: Whether or not to allow remote resources preview. Default value is `True`
-- **`TABULAR_MAX_SIZE`**: Max allowed file size in bytes if defined. Default value is `None`
 - **`TABULAR_PAGE_SIZE`**: fetched data page size. Default to `5`
 
 
