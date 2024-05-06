@@ -1,14 +1,14 @@
 {
   "Preview of {name}": "Prévisualisation de {name}",
   "{count} columns": "{count} colonnes | {count} colonne | {count} colonnes",
-  "Explore data": "Explorer",
+  "Explore data": "Explore",
   "The preview of this file failed to load.": "La prévisualisation de ce fichier n'a pas pu être chargée.",
   "{count} rows": "{count} lignes | {count} ligne | {count} lignes",
   "Sort ascending": "Trier par ordre croissant",
   "Sort descending": "Trier par ordre décroissant",
   "The data structure of this file failed to load.": "La structure de données de ce fichier n'a pas pu être chargée.",
   "No data structure found for this file.": "Aucune structure de données trouvée pour ce fichier.",
-  "Explore data in detail": "Explorer les données en détail",
-  "Use our tool": "Utiliser notre outil pour obtenir un aperçu des données, en savoir plus sur les différentes colonnes ou réaliser des filtres et des tris.",
-  "Preview updated: {date}": "Dernière mise à jour de la prévisualisation : {date}"
+  "Explore data in detail": "Explore data in detail",
+  "Use our tool": "Use our tool to get an overview of data learn about different columns or perform filters and sorts.",
+  "Preview updated: {date}": "Preview updated: {date}"
 }
