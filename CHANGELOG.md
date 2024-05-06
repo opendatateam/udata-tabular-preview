@@ -2,6 +2,7 @@
 
 ## Current (in progress)
 
+- :warning: Plug udata-tabular-preview to tabular api and decomission of csvapi [#33](https://github.com/opendatateam/udata-tabular-preview/pull/33)
 - Migrate to Python 3.11 following `udata` dependencies upgrade [#35](https://github.com/opendatateam/udata-tabular-preview/pull/35)
 - Don't show preview if parsing has failed [#36](https://github.com/opendatateam/udata-tabular-preview/pull/36)
 - Display the latest date of the preview [#37](https://github.com/opendatateam/udata-tabular-preview/pull/37)
