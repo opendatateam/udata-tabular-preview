@@ -51,6 +51,7 @@ setup(
     version=__import__('udata_tabular_preview').__version__,
     description=__import__('udata_tabular_preview').__description__,
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/opendatateam/udata-tabular-preview',
     author='Open Data Team',
     author_email='contact@opendata.team',
