@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 4.0.0 (2024-05-06)
 
 - :warning: Plug udata-tabular-preview to tabular api and decomission of csvapi [#33](https://github.com/opendatateam/udata-tabular-preview/pull/33)
 - Migrate to Python 3.11 following `udata` dependencies upgrade [#35](https://github.com/opendatateam/udata-tabular-preview/pull/35)
