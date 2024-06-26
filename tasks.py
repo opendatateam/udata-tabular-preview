@@ -104,22 +104,6 @@ def qa(ctx):
     success('Quality check OK')
 
 
-@task
-def assets_watch(ctx):
-    '''Build assets on change'''
-    header('Building udata-tabular-preview assets')
-    with ctx.cd(ROOT):
-        ctx.run('npm run dev', pty=True)
-
-
-@task
-def assets_build(ctx):
-    '''Build assets'''
-    header('Building udata-tabular-preview assets')
-    with ctx.cd(ROOT):
-        ctx.run('npm run build', pty=True)
-
-
 def set_po_metadata(filename, locale):
     # Fix crowdin requiring Language with `2-digit` iso code in potfile
     # to produce 2-digit iso code pofile
@@ -169,21 +153,9 @@ def i18nc(ctx):
         ctx.run('python setup.py compile_catalog')
 
 
-@task(i18nc, assets_build)
-def dist(ctx, buildno=None):
-    '''Package for distribution'''
-    header('Building a distribuable package')
-    cmd = ['python setup.py']
-    if buildno:
-        cmd.append('egg_info -b {0}'.format(buildno))
-    cmd.append('bdist_wheel')
-    with ctx.cd(ROOT):
-        ctx.run(' '.join(cmd), pty=True)
-    success('Distribution is available in dist directory')
-
 @task(i18nc)
 def pydist(ctx, buildno=None):
-    '''Perform python packaging (without compiling assets)'''
+    '''Perform python packaging'''
     header('Building a distribuable package')
     cmd = ['python setup.py']
     if buildno:
@@ -194,7 +166,7 @@ def pydist(ctx, buildno=None):
     success('Distribution is available in dist directory')
 
 
-@task(clean, qa, call(test, report=True), dist, default=True)
+@task(clean, qa, call(test, report=True), pydist, default=True)
 def default(ctx):
     '''Perform quality report, tests and packaging'''
     pass

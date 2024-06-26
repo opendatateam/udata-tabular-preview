@@ -28,34 +28,6 @@ You can control this plugin behavior with the following `udata.cfg` parameters:
 
 ## Development
 
-### JS dependencies
-
-Install JS dependencies with:
-
-```shell
-npm install
-```
-
-Then you can package these assets with:
-
-```shell
-inv assets-watch
-```
-
-(You might need to relaunch these commands when you pull upstream changes).
-
-You can build a production-ready version of JS and CSS assets with:
-
-```shell
-inv assets-build
-```
-
-You should extract the vue-i18n language files after modifying this plugin with :
-
-```shell
-inv i18n
-```
-
 ### Python dependencies
 
 Assuming you are in an active virtualenv with `udata` installed and in the current project cloned repository directory, install all dependencies using:
