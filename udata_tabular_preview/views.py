@@ -21,9 +21,11 @@ def can_explore_dataset(ctx):
     dataset = ctx.get('dataset', None)
     return dataset and any(can_explore(resource) for resource in dataset.resources)
 
+
 def can_explore_any_main_resource(ctx):
     dataset = ctx.get('dataset', None)
     return any(can_explore(resource) and resource.type == "main" for resource in dataset.resources)
+
 
 @template_hook('header.snippets', when=can_explore_dataset)
 def load_explore_metadata(ctx):
