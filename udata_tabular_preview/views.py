@@ -22,6 +22,14 @@ def can_explore_dataset(ctx):
     return dataset and any(can_explore(resource) for resource in dataset.resources)
 
 
+def can_explore_any_main_resource(ctx):
+    dataset = ctx.get('dataset', None)
+    return dataset and any(
+        can_explore(resource)
+        and resource.type == "main"
+        for resource in dataset.resources)
+
+
 @template_hook('header.snippets', when=can_explore_dataset)
 def load_explore_metadata(ctx):
     dataset = ctx.get('dataset', None)
@@ -42,7 +50,7 @@ def load_explore_style(ctx):
     return render_template('styles.html')
 
 
-@template_hook('dataset.display.explore-button', when=can_explore_dataset)
+@template_hook('dataset.display.explore-button', when=can_explore_any_main_resource)
 def load_explore_button(ctx):
     dataset = ctx.get('dataset', None)
     explore_url = current_app.config.get('TABULAR_EXPLORE_URL')
