@@ -1,6 +1,6 @@
 # Changelog
 
-## Current (in progress)
+## 4.0.1 (2024-10-03)
 
 - Remove useless max size setting [#41](https://github.com/opendatateam/udata-tabular-preview/pull/41)
 - Improve explore button logic [#43](https://github.com/opendatateam/udata-tabular-preview/pull/43)
