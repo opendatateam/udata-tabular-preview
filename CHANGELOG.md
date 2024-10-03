@@ -1,5 +1,9 @@
 # Changelog
 
+## Current (in progress)
+
+- Nothing yet
+
 ## 4.0.1 (2024-10-03)
 
 - Remove useless max size setting [#41](https://github.com/opendatateam/udata-tabular-preview/pull/41)
