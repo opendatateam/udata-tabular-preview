@@ -1,3 +1,7 @@
+> [!IMPORTANT]  
+> This repository is archived.
+> Tabular preview features (and more) have been integrated in [cdata](https://github.com/datagouv/cdata/).
+
 # Tabular Preview
 
 A plugin to preview tabular files (CSV, Excel ...) using [tabular-api](https://github.com/etalab/api-tabular)
